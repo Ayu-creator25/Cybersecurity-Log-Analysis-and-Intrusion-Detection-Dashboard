@@ -1,0 +1,128 @@
+position,column,group,raw_dtype,blank_cells,all_numeric_after_cleaning,distinct_values,is_constant,min,max
+1,ts,meta,int64,0,True,35975,False,1554191661.0,1556547752.0
+2,Processor_DPC_Rate,Processor,int64,0,True,190,False,0.0,195.0
+3,Processor_pct_ Idle_Time,Processor,str,11,True,35863,False,0.0,99.63895633
+4,Processor_pct_ C3_Time,Processor,str,11,True,1,True,0.0,0.0
+5,Processor_pct_ Interrupt_Time,Processor,str,11,True,16621,False,0.0,10.64196393
+6,Processor_pct_ C2_Time,Processor,str,11,True,1,True,0.0,0.0
+7,Processor_pct_ User_Time,Processor,str,11,True,35464,False,0.0,91.56641996
+8,Processor_pct_ C1_Time,Processor,str,11,True,35863,False,0.0,99.63895633
+9,Processor_pct_ Processor_Time,Processor,str,11,True,35737,False,0.0,100.0
+10,Processor_C1_ransitions_sec,Processor,str,11,True,35858,False,0.0,10318.52139
+11,Processor_pct_ DPC_Time,Processor,str,11,True,20141,False,0.0,21.95388768
+12,Processor_C2_ransitions_sec,Processor,str,11,True,1,True,0.0,0.0
+13,Processor_pct_ Privileged_Time,Processor,str,11,True,35396,False,0.0,83.81536928
+14,Processor_C3_ransitions_sec,Processor,str,11,True,1,True,0.0,0.0
+15,Processor_DPCs_Queued_sec,Processor,str,11,True,35942,False,3.794126162,8141.157271
+16,Processor_Interrupts_sec,Processor,str,11,True,35960,False,169.8712636,30853.76309
+17,Process_Pool_Paged Bytes,Process,int64,0,True,26933,False,7733328.0,38066232.0
+18,Process_IO Read_Operations_sec,Process,str,419,True,30140,False,0.0,386896.6726
+19,Process_Working_Set_ Private,Process,int64,0,True,34310,False,228143104.0,2980859904.0
+20,Process_Working_Set_Peak,Process,int64,0,True,14780,False,2870493184.0,8300408832.0
+21,Process_IO_Write Operations_sec,Process,str,154,True,33796,False,0.0,4753.528873
+22,Process_Page_File Bytes,Process,int64,0,True,34954,False,722939904.0,7340392448.0
+23,Process_pct_ User_Time,Process,str,183,True,35322,False,0.0,183.1328399
+24,Process_Virtual_Bytes Peak,Process,float64,0,True,88,False,83600000000000.0,309000000000000.0
+25,Process_Page_File Bytes Peak,Process,int64,0,True,15235,False,1341394944.0,13209743360.0
+26,Process_IO_Other_Bytes_sec,Process,str,186,True,35788,False,31.89629174,18914141.12
+27,Process_Private_Bytes,Process,int64,0,True,34954,False,722939904.0,7340392448.0
+28,Process_IO_Write_Bytes_sec,Process,str,117,True,33949,False,0.0,56443866.88
+29,Process_Elapsed_Time,Process,int64,0,True,1,True,0.0,0.0
+30,Process_Virtual_Bytes,Process,float64,0,True,87,False,83600000000000.0,309000000000000.0
+31,Process_pct_ Processor_Time,Process,str,47,True,33448,False,1.392089335,202.8530312
+32,Process_Creating Process ID,Process,int64,0,True,1,True,0.0,0.0
+33,Process_Pool Nonpaged Bytes,Process,int64,0,True,31312,False,995984.0,88545090.0
+34,Process_Working Set,Process,int64,0,True,34913,False,733188096.0,4850130944.0
+35,Process_Page Faults_sec,Process,str,232,True,35742,False,1.49998618,175903.2582
+36,Process_ID Process,Process,int64,0,True,1,True,0.0,0.0
+37,Process_IO Other Operations_sec,Process,str,246,True,35723,False,0.200025633,54529.58122
+38,Process_IO Data Operations_sec,Process,str,331,True,34339,False,0.0,386909.0542
+39,Process_Thread Count,Process,int64,0,True,1219,False,703.0,2290.0
+40,Process_pct_ Privileged_Time,Process,str,36,True,35878,False,1.053563598,200.2029509
+41,Process_IO Data Bytes_sec,Process,str,244,True,34512,False,0.0,108982727.4
+42,Process_IO Read Bytes_sec,Process,str,538,True,30054,False,0.0,91693712.76
+43,Process_Priority Base,Process,int64,0,True,1,True,0.0,0.0
+44,Process_Handle Count,Process,int64,0,True,12548,False,19032.0,67138.0
+45,Network_I(Intel R _82574L_GNC)TCP_APS,Network,int64,0,True,3336,False,0.0,13826.0
+46,Network_I(Intel R _82574L_GNC) Packets Received Unknown,Network,int64,0,True,1,True,0.0,0.0
+47,Network_I(Intel R _82574L_GNC) Bytes Received sec,Network,str,11,True,35962,False,0.0,6009248.295
+48,Network_I(Intel R _82574L_GNC) Bytes Sent sec,Network,str,11,True,34991,False,0.0,356850.4533
+49,Network_I(Intel R _82574L_GNC) Packets Outbound Errors,Network,int64,0,True,1,True,0.0,0.0
+50,Network_I(Intel R _82574L_GNC) Packets Received Discarded,Network,int64,0,True,1,True,0.0,0.0
+51,Network_I(Intel R _82574L_GNC) Bytes Total sec,Network,str,11,True,35963,False,6.399734878,6184726.642
+52,Network_I(Intel R _82574L_GNC) Packets Outbound Discarded,Network,int64,0,True,1,True,0.0,0.0
+53,Network_I(Intel R _82574L_GNC) TCP RSC Exceptions sec,Network,str,11,True,1,True,0.0,0.0
+54,Network_I(Intel R _82574L_GNC) Packets Sent Unicast sec,Network,str,11,True,34795,False,0.0,2992.793538
+55,Network_I(Intel R _82574L_GNC) Output Queue Length,Network,int64,0,True,1,True,0.0,0.0
+56,Network_I(Intel R _82574L_GNC) Packets Received sec,Network,str,11,True,35785,False,0.0,3986.375635
+57,Network_I(Intel R _82574L_GNC) Current Bandwidth,Network,int64,0,True,2,False,0.0,1000000000.0
+58,Network_I(Intel R _82574L_GNC) Packets sec,Network,str,11,True,35847,False,0.099995857,6777.558903
+59,Network_I(Intel R _82574L_GNC) TCP Active RSC Connections,Network,int64,0,True,79,False,0.0,491.0
+60,Network_I(Intel R _82574L_GNC) Packets Sent sec,Network,str,11,True,34795,False,0.0,2992.793538
+61,Network_I(Intel R _82574L_GNC) Packets Received Unicast sec,Network,str,11,True,35785,False,0.0,3986.375635
+62,Network_I(Intel R _82574L_GNC) Packets Sent Non-Unicast sec,Network,str,11,True,1,True,0.0,0.0
+63,Network_I(Intel R _82574L_GNC) Packets Received Non-Unicast sec,Network,str,11,True,1,True,0.0,0.0
+64,Network_I(Intel R _82574L_GNC) TCP RSC Coalesced Packets sec,Network,str,11,True,1,True,0.0,0.0
+65,Network_I(Intel R _82574L_GNC) Offloaded Connections,Network,int64,0,True,1,True,0.0,0.0
+66,Network_I(Intel R _82574L_GNC) Packets Received Errors,Network,int64,0,True,1,True,0.0,0.0
+67,Memory Pool Paged Bytes,Memory,int64,0,True,11489,False,90349568.0,500199424.0
+68,Memory Free & Zero Page List Bytes,Memory,int64,0,True,25285,False,0.0,2555547648.0
+69,Memory Cache Bytes Peak,Memory,int64,0,True,78,False,44781568.0,815652864.0
+70,Memory System Code Resident Bytes,Memory,int64,0,True,289,False,0.0,3579904.0
+71,Memory Available Bytes,Memory,int64,0,True,34156,False,5042176.0,2881404928.0
+72,Memory Commit Limit,Memory,int64,0,True,86,False,3354243072.0,13334994944.0
+73,Memory Transition Pages RePurposed sec,Memory,str,11,True,6638,False,0.0,34599.66574
+74,Memory Pages Output sec,Memory,str,11,True,6681,False,0.0,15599.87581
+75,Memory Page Reads sec,Memory,str,11,True,20457,False,0.0,7164.985776
+76,Memory Demand Zero Faults sec,Memory,str,11,True,35963,False,1.00160033,146363.5232
+77,Memory Available KBytes,Memory,int64,0,True,34156,False,4924.0,2813872.0
+78,Memory Pages sec,Memory,str,11,True,20885,False,0.0,47052.77156
+79,Memory Cache Bytes,Memory,int64,0,True,12334,False,466944.0,776626176.0
+80,Memory Pool Nonpaged Bytes,Memory,int64,0,True,10362,False,55775232.0,157003776.0
+81,Memory Page Faults sec,Memory,str,11,True,35964,False,2.103163651,184618.044
+82,Memory Transition Faults sec,Memory,str,11,True,35880,False,0.0,52258.57122
+83,Memory System Cache Resident Bytes,Memory,int64,0,True,11473,False,0.0,240414720.0
+84,Memory Long-Term Average Standby Cache Lifetime (s),Memory,int64,0,True,9265,False,3.0,14400.0
+85,Memory Standby Cache Reserve Bytes,Memory,int64,0,True,23162,False,0.0,1125289984.0
+86,Memory Page Writes sec,Memory,str,11,True,6681,False,0.0,1087.096272
+87,Memory System Code Total Bytes,Memory,int64,0,True,3,False,0.0,4419584.0
+88,Memory Standby Cache Core Bytes,Memory,int64,0,True,10336,False,380928.0,258240512.0
+89,Memory System Driver Resident Bytes,Memory,float64,0,True,1422,False,0.0,17600000000000.0
+90,Memory Standby Cache Normal Priority Bytes,Memory,int64,0,True,26095,False,0.0,1377394688.0
+91,Memory Pool Paged Allocs,Memory,int64,0,True,1706,False,0.0,637057.0
+92,Memory Pool Nonpaged Allocs,Memory,int64,0,True,1699,False,0.0,278063.0
+93,Memory pct_ Committed Bytes In Use,Memory,float64,0,True,35701,False,25.96149957,97.74985609
+94,Memory Free System Page Table Entries,Memory,int64,0,True,8637,False,12155985.0,4294967295.0
+95,Memory Available MBytes,Memory,int64,0,True,2314,False,4.0,2747.0
+96,Memory Modified Page List Bytes,Memory,int64,0,True,10898,False,0.0,864276480.0
+97,Memory Cache Faults sec,Memory,str,11,True,25600,False,0.0,20237.16323
+98,Memory Committed Bytes,Memory,int64,0,True,35092,False,1194229760.0,13034938368.0
+99,Memory System Driver Total Bytes,Memory,int64,0,True,1574,False,16384000.0,34668544.0
+100,Memory Pages Input sec,Memory,str,11,True,20568,False,0.0,38921.32444
+101,Memory Pool Paged Resident Bytes,Memory,int64,0,True,15549,False,10772480.0,414629888.0
+102,Memory Write Copies sec,Memory,str,11,True,15984,False,0.0,1426.051475
+103,LogicalDisk(_Total) Avg  Disk Bytes Write,LogicalDisk,str,11,True,17983,False,0.0,977715.2
+104,LogicalDisk(_Total) pct_ Idle Time,LogicalDisk,str,11,True,35909,False,0.12254757,100.3550556
+105,LogicalDisk(_Total) Disk Reads sec,LogicalDisk,str,11,True,18739,False,0.0,7127.875491
+106,LogicalDisk(_Total) pct_ Free Space,LogicalDisk,float64,0,True,1083,False,80.36137455,94.61140809
+107,LogicalDisk(_Total) Disk Read Bytes sec,LogicalDisk,str,11,True,18868,False,0.0,160998478.7
+108,LogicalDisk(_Total) Avg  Disk sec Read,LogicalDisk,str,11,True,17796,False,0.0,0.0376
+109,LogicalDisk(_Total) Disk Writes sec,LogicalDisk,str,11,True,35208,False,0.0,3025.274082
+110,LogicalDisk(_Total) Current Disk Queue Length,LogicalDisk,int64,0,True,9,False,0.0,8.0
+111,LogicalDisk(_Total) Split IO Sec,LogicalDisk,str,11,True,18204,False,0.0,2352.741707
+112,LogicalDisk(_Total) Free Megabytes,LogicalDisk,int64,0,True,1081,False,164470.0,193451.0
+113,LogicalDisk(_Total) Avg  Disk sec Write,LogicalDisk,str,11,True,33804,False,0.0,0.189965886
+114,LogicalDisk(_Total) Disk Bytes sec,LogicalDisk,str,11,True,35625,False,0.0,194346909.1
+115,LogicalDisk(_Total) Avg  Disk Read Queue Length,LogicalDisk,str,11,True,16705,False,0.0,4.240602208
+116,LogicalDisk(_Total) pct_ Disk Time,LogicalDisk,str,11,True,35659,False,0.0,313.4192499
+117,LogicalDisk(_Total) Avg  Disk Bytes Read,LogicalDisk,str,11,True,10220,False,0.0,944383.0623
+118,LogicalDisk(_Total) Avg  Disk Write Queue Length,LogicalDisk,str,11,True,35187,False,0.0,1.83675284
+119,LogicalDisk(_Total) Avg  Disk Queue Length,LogicalDisk,str,11,True,35412,False,0.0,4.364881596
+120,LogicalDisk(_Total) pct_ Disk Read Time,LogicalDisk,str,11,True,18902,False,0.0,294.5294484
+121,LogicalDisk(_Total) Disk Write Bytes sec,LogicalDisk,str,11,True,35478,False,0.0,63937448.52
+122,LogicalDisk(_Total) Disk Transfers sec,LogicalDisk,str,11,True,35419,False,0.0,7170.887411
+123,LogicalDisk(_Total) Avg  Disk Bytes Transfer,LogicalDisk,str,11,True,20123,False,0.0,977715.2
+124,LogicalDisk(_Total) pct_ Disk Write Time,LogicalDisk,str,11,True,35538,False,0.0,183.675284
+125,LogicalDisk(_Total) Avg  Disk sec Transfer,LogicalDisk,str,11,True,34239,False,0.0,0.045244317
+126,label,meta,int64,0,True,2,False,0.0,1.0
+127,type,meta,str,0,,8,False,,
