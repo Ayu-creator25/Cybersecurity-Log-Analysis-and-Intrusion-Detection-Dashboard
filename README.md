@@ -6,7 +6,7 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Milestone 2 is done: the raw data loads correctly, a data dictionary exists, and the ground truth matches the main file. Cleaning, exploratory analysis, detection and the dashboard are not built yet.
+Done: dataset and schema verification, the loading layer, and data cleaning with validation. Exploratory analysis, feature engineering, detection and the dashboard are not built yet.
 
 ## How to run
 
@@ -18,9 +18,14 @@ source .venv/Scripts/activate
 python -m pip install -r requirements.txt
 python -m src.schema_report
 python -m src.check_ground_truth
+python -m src.blank_report
+python -m src.clean_data
 ```
 
-`src.schema_report` writes `docs/data_dictionary.csv`. `src.check_ground_truth` prints PASS when the ground-truth file matches the attack rows of the main file.
+- `src.schema_report` writes `docs/data_dictionary.csv`.
+- `src.check_ground_truth` prints PASS when the ground-truth file matches the attack rows of the main file.
+- `src.blank_report` shows where the blank cells are.
+- `src.clean_data` writes the cleaned copy to `data/processed/windows10_clean.csv` and prints PASS when 13 checks against the raw file succeed. That folder is not stored in Git, so run this command to create it.
 
 ## Dataset
 
