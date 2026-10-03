@@ -6,7 +6,21 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Early stage. The repository holds the raw data. Analysis and the dashboard are not built yet.
+Milestone 2 is done: the raw data loads correctly, a data dictionary exists, and the ground truth matches the main file. Cleaning, exploratory analysis, detection and the dashboard are not built yet.
+
+## How to run
+
+Requires Python 3.12. In Git Bash, from the project folder:
+
+```
+python -m venv .venv
+source .venv/Scripts/activate
+python -m pip install -r requirements.txt
+python -m src.schema_report
+python -m src.check_ground_truth
+```
+
+`src.schema_report` writes `docs/data_dictionary.csv`. `src.check_ground_truth` prints PASS when the ground-truth file matches the attack rows of the main file.
 
 ## Dataset
 
