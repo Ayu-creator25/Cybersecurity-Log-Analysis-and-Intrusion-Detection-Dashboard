@@ -6,7 +6,7 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Done: dataset and schema verification, the loading layer, and data cleaning with validation. Exploratory analysis, feature engineering, detection and the dashboard are not built yet.
+Done: dataset and schema verification, the loading layer, data cleaning with validation, and exploratory analysis (results in `docs/eda_findings.md`). Feature engineering, detection and the dashboard are not built yet.
 
 ## How to run
 
@@ -20,12 +20,17 @@ python -m src.schema_report
 python -m src.check_ground_truth
 python -m src.blank_report
 python -m src.clean_data
+python -m src.eda_time
+python -m src.eda_drift
+python -m src.eda_separation
+python -m src.eda_correlation
 ```
 
 - `src.schema_report` writes `docs/data_dictionary.csv`.
 - `src.check_ground_truth` prints PASS when the ground-truth file matches the attack rows of the main file.
 - `src.blank_report` shows where the blank cells are.
 - `src.clean_data` writes the cleaned copy to `data/processed/windows10_clean.csv` and prints PASS when 13 checks against the raw file succeed. That folder is not stored in Git, so run this command to create it.
+- `src.eda_time`, `src.eda_drift`, `src.eda_separation` and `src.eda_correlation` print the exploratory results. They read the cleaned file, so run `src.clean_data` first.
 
 ## Dataset
 
