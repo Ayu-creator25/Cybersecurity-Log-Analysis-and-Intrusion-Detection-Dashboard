@@ -1,125 +1,125 @@
-position,column,group,blank_cells,status,kept_instead,reason
-1,Processor_DPC_Rate,Processor,0,kept,,
-2,Processor_pct_ Idle_Time,Processor,11,kept,,
-3,Processor_pct_ C3_Time,Processor,11,dropped,,constant column
-4,Processor_pct_ Interrupt_Time,Processor,11,kept,,
-5,Processor_pct_ C2_Time,Processor,11,dropped,,constant column
-6,Processor_pct_ User_Time,Processor,11,kept,,
-7,Processor_pct_ C1_Time,Processor,11,dropped,Processor_pct_ Idle_Time,near-copy of the kept feature (|correlation| >= 0.99)
-8,Processor_pct_ Processor_Time,Processor,11,kept,,
-9,Processor_C1_ransitions_sec,Processor,11,kept,,
-10,Processor_pct_ DPC_Time,Processor,11,kept,,
-11,Processor_C2_ransitions_sec,Processor,11,dropped,,constant column
-12,Processor_pct_ Privileged_Time,Processor,11,kept,,
-13,Processor_C3_ransitions_sec,Processor,11,dropped,,constant column
-14,Processor_DPCs_Queued_sec,Processor,11,kept,,
-15,Processor_Interrupts_sec,Processor,11,kept,,
-16,Process_Pool_Paged Bytes,Process,0,kept,,
-17,Process_IO Read_Operations_sec,Process,419,kept,,
-18,Process_Working_Set_ Private,Process,0,kept,,
-19,Process_Working_Set_Peak,Process,0,kept,,
-20,Process_IO_Write Operations_sec,Process,154,kept,,
-21,Process_Page_File Bytes,Process,0,kept,,
-22,Process_pct_ User_Time,Process,183,dropped,Processor_pct_ User_Time,near-copy of the kept feature (|correlation| >= 0.99)
-23,Process_Virtual_Bytes Peak,Process,0,kept,,
-24,Process_Page_File Bytes Peak,Process,0,kept,,
-25,Process_IO_Other_Bytes_sec,Process,186,kept,,
-26,Process_Private_Bytes,Process,0,dropped,Process_Page_File Bytes,near-copy of the kept feature (|correlation| >= 0.99)
-27,Process_IO_Write_Bytes_sec,Process,117,kept,,
-28,Process_Elapsed_Time,Process,0,dropped,,constant column
-29,Process_Virtual_Bytes,Process,0,dropped,Process_Virtual_Bytes Peak,near-copy of the kept feature (|correlation| >= 0.99)
-30,Process_pct_ Processor_Time,Process,47,kept,,
-31,Process_Creating Process ID,Process,0,dropped,,constant column
-32,Process_Pool Nonpaged Bytes,Process,0,kept,,
-33,Process_Working Set,Process,0,kept,,
-34,Process_Page Faults_sec,Process,232,kept,,
-35,Process_ID Process,Process,0,dropped,,constant column
-36,Process_IO Other Operations_sec,Process,246,kept,,
-37,Process_IO Data Operations_sec,Process,331,kept,,
-38,Process_Thread Count,Process,0,kept,,
-39,Process_pct_ Privileged_Time,Process,36,dropped,Processor_pct_ User_Time,near-copy of the kept feature (|correlation| >= 0.99)
-40,Process_IO Data Bytes_sec,Process,244,kept,,
-41,Process_IO Read Bytes_sec,Process,538,kept,,
-42,Process_Priority Base,Process,0,dropped,,constant column
-43,Process_Handle Count,Process,0,kept,,
-44,Network_I(Intel R _82574L_GNC)TCP_APS,Network,0,kept,,
-45,Network_I(Intel R _82574L_GNC) Packets Received Unknown,Network,0,dropped,,constant column
-46,Network_I(Intel R _82574L_GNC) Bytes Received sec,Network,11,kept,,
-47,Network_I(Intel R _82574L_GNC) Bytes Sent sec,Network,11,kept,,
-48,Network_I(Intel R _82574L_GNC) Packets Outbound Errors,Network,0,dropped,,constant column
-49,Network_I(Intel R _82574L_GNC) Packets Received Discarded,Network,0,dropped,,constant column
-50,Network_I(Intel R _82574L_GNC) Bytes Total sec,Network,11,kept,,
-51,Network_I(Intel R _82574L_GNC) Packets Outbound Discarded,Network,0,dropped,,constant column
-52,Network_I(Intel R _82574L_GNC) TCP RSC Exceptions sec,Network,11,dropped,,constant column
-53,Network_I(Intel R _82574L_GNC) Packets Sent Unicast sec,Network,11,kept,,
-54,Network_I(Intel R _82574L_GNC) Output Queue Length,Network,0,dropped,,constant column
-55,Network_I(Intel R _82574L_GNC) Packets Received sec,Network,11,kept,,
-56,Network_I(Intel R _82574L_GNC) Current Bandwidth,Network,0,kept,,
-57,Network_I(Intel R _82574L_GNC) Packets sec,Network,11,kept,,
-58,Network_I(Intel R _82574L_GNC) TCP Active RSC Connections,Network,0,kept,,
-59,Network_I(Intel R _82574L_GNC) Packets Sent sec,Network,11,dropped,Network_I(Intel R _82574L_GNC) Packets Sent Unicast sec,near-copy of the kept feature (|correlation| >= 0.99)
-60,Network_I(Intel R _82574L_GNC) Packets Received Unicast sec,Network,11,dropped,Network_I(Intel R _82574L_GNC) Packets Received sec,near-copy of the kept feature (|correlation| >= 0.99)
-61,Network_I(Intel R _82574L_GNC) Packets Sent Non-Unicast sec,Network,11,dropped,,constant column
-62,Network_I(Intel R _82574L_GNC) Packets Received Non-Unicast sec,Network,11,dropped,,constant column
-63,Network_I(Intel R _82574L_GNC) TCP RSC Coalesced Packets sec,Network,11,dropped,,constant column
-64,Network_I(Intel R _82574L_GNC) Offloaded Connections,Network,0,dropped,,constant column
-65,Network_I(Intel R _82574L_GNC) Packets Received Errors,Network,0,dropped,,constant column
-66,Memory Pool Paged Bytes,Memory,0,kept,,
-67,Memory Free & Zero Page List Bytes,Memory,0,kept,,
-68,Memory Cache Bytes Peak,Memory,0,kept,,
-69,Memory System Code Resident Bytes,Memory,0,kept,,
-70,Memory Available Bytes,Memory,0,kept,,
-71,Memory Commit Limit,Memory,0,kept,,
-72,Memory Transition Pages RePurposed sec,Memory,11,kept,,
-73,Memory Pages Output sec,Memory,11,kept,,
-74,Memory Page Reads sec,Memory,11,kept,,
-75,Memory Demand Zero Faults sec,Memory,11,kept,,
-76,Memory Available KBytes,Memory,0,dropped,Memory Available Bytes,near-copy of the kept feature (|correlation| >= 0.99)
-77,Memory Pages sec,Memory,11,kept,,
-78,Memory Cache Bytes,Memory,0,kept,,
-79,Memory Pool Nonpaged Bytes,Memory,0,kept,,
-80,Memory Page Faults sec,Memory,11,kept,,
-81,Memory Transition Faults sec,Memory,11,kept,,
-82,Memory System Cache Resident Bytes,Memory,0,kept,,
-83,Memory Long-Term Average Standby Cache Lifetime (s),Memory,0,kept,,
-84,Memory Standby Cache Reserve Bytes,Memory,0,kept,,
-85,Memory Page Writes sec,Memory,11,dropped,Memory Pages Output sec,near-copy of the kept feature (|correlation| >= 0.99)
-86,Memory System Code Total Bytes,Memory,0,dropped,Memory System Code Resident Bytes,near-copy of the kept feature (|correlation| >= 0.99)
-87,Memory Standby Cache Core Bytes,Memory,0,kept,,
-88,Memory System Driver Resident Bytes,Memory,0,kept,,
-89,Memory Standby Cache Normal Priority Bytes,Memory,0,kept,,
-90,Memory Pool Paged Allocs,Memory,0,kept,,
-91,Memory Pool Nonpaged Allocs,Memory,0,dropped,Memory Pool Paged Allocs,near-copy of the kept feature (|correlation| >= 0.99)
-92,Memory pct_ Committed Bytes In Use,Memory,0,kept,,
-93,Memory Free System Page Table Entries,Memory,0,kept,,
-94,Memory Available MBytes,Memory,0,dropped,Memory Available Bytes,near-copy of the kept feature (|correlation| >= 0.99)
-95,Memory Modified Page List Bytes,Memory,0,kept,,
-96,Memory Cache Faults sec,Memory,11,kept,,
-97,Memory Committed Bytes,Memory,0,kept,,
-98,Memory System Driver Total Bytes,Memory,0,kept,,
-99,Memory Pages Input sec,Memory,11,kept,,
-100,Memory Pool Paged Resident Bytes,Memory,0,kept,,
-101,Memory Write Copies sec,Memory,11,kept,,
-102,LogicalDisk(_Total) Avg  Disk Bytes Write,LogicalDisk,11,kept,,
-103,LogicalDisk(_Total) pct_ Idle Time,LogicalDisk,11,kept,,
-104,LogicalDisk(_Total) Disk Reads sec,LogicalDisk,11,kept,,
-105,LogicalDisk(_Total) pct_ Free Space,LogicalDisk,0,kept,,
-106,LogicalDisk(_Total) Disk Read Bytes sec,LogicalDisk,11,dropped,LogicalDisk(_Total) Disk Reads sec,near-copy of the kept feature (|correlation| >= 0.99)
-107,LogicalDisk(_Total) Avg  Disk sec Read,LogicalDisk,11,kept,,
-108,LogicalDisk(_Total) Disk Writes sec,LogicalDisk,11,kept,,
-109,LogicalDisk(_Total) Current Disk Queue Length,LogicalDisk,0,kept,,
-110,LogicalDisk(_Total) Split IO Sec,LogicalDisk,11,kept,,
-111,LogicalDisk(_Total) Free Megabytes,LogicalDisk,0,dropped,LogicalDisk(_Total) pct_ Free Space,near-copy of the kept feature (|correlation| >= 0.99)
-112,LogicalDisk(_Total) Avg  Disk sec Write,LogicalDisk,11,kept,,
-113,LogicalDisk(_Total) Disk Bytes sec,LogicalDisk,11,kept,,
-114,LogicalDisk(_Total) Avg  Disk Read Queue Length,LogicalDisk,11,dropped,LogicalDisk(_Total) Disk Reads sec,near-copy of the kept feature (|correlation| >= 0.99)
-115,LogicalDisk(_Total) pct_ Disk Time,LogicalDisk,11,kept,,
-116,LogicalDisk(_Total) Avg  Disk Bytes Read,LogicalDisk,11,kept,,
-117,LogicalDisk(_Total) Avg  Disk Write Queue Length,LogicalDisk,11,kept,,
-118,LogicalDisk(_Total) Avg  Disk Queue Length,LogicalDisk,11,dropped,LogicalDisk(_Total) pct_ Disk Time,near-copy of the kept feature (|correlation| >= 0.99)
-119,LogicalDisk(_Total) pct_ Disk Read Time,LogicalDisk,11,dropped,LogicalDisk(_Total) Disk Reads sec,near-copy of the kept feature (|correlation| >= 0.99)
-120,LogicalDisk(_Total) Disk Write Bytes sec,LogicalDisk,11,kept,,
-121,LogicalDisk(_Total) Disk Transfers sec,LogicalDisk,11,kept,,
-122,LogicalDisk(_Total) Avg  Disk Bytes Transfer,LogicalDisk,11,kept,,
-123,LogicalDisk(_Total) pct_ Disk Write Time,LogicalDisk,11,dropped,LogicalDisk(_Total) Avg  Disk Write Queue Length,near-copy of the kept feature (|correlation| >= 0.99)
-124,LogicalDisk(_Total) Avg  Disk sec Transfer,LogicalDisk,11,kept,,
+position,column,group,blank_cells,trend_with_ts_early,trend_with_ts_late,status,kept_instead,reason
+1,Processor_DPC_Rate,Processor,0,-0.21,0.12,kept,,
+2,Processor_pct_ Idle_Time,Processor,11,0.03,-0.4,kept,,
+3,Processor_pct_ C3_Time,Processor,11,,,dropped,,constant column
+4,Processor_pct_ Interrupt_Time,Processor,11,-0.23,0.36,kept,,
+5,Processor_pct_ C2_Time,Processor,11,,,dropped,,constant column
+6,Processor_pct_ User_Time,Processor,11,0.07,0.26,kept,,
+7,Processor_pct_ C1_Time,Processor,11,0.03,-0.4,dropped,Processor_pct_ Idle_Time,near-copy of the kept feature (|correlation| >= 0.99)
+8,Processor_pct_ Processor_Time,Processor,11,0.02,0.36,kept,,
+9,Processor_C1_ransitions_sec,Processor,11,-0.09,-0.37,kept,,
+10,Processor_pct_ DPC_Time,Processor,11,-0.09,0.25,kept,,
+11,Processor_C2_ransitions_sec,Processor,11,,,dropped,,constant column
+12,Processor_pct_ Privileged_Time,Processor,11,-0.04,0.41,kept,,
+13,Processor_C3_ransitions_sec,Processor,11,,,dropped,,constant column
+14,Processor_DPCs_Queued_sec,Processor,11,-0.22,0.18,kept,,
+15,Processor_Interrupts_sec,Processor,11,-0.05,0.21,kept,,
+16,Process_Pool_Paged Bytes,Process,0,-0.05,-0.6,kept,,
+17,Process_IO Read_Operations_sec,Process,419,-0.19,-0.28,kept,,
+18,Process_Working_Set_ Private,Process,0,0.53,-0.27,kept,,
+19,Process_Working_Set_Peak,Process,0,0.5,-0.59,kept,,
+20,Process_IO_Write Operations_sec,Process,154,-0.24,-0.36,kept,,
+21,Process_Page_File Bytes,Process,0,0.33,-0.27,kept,,
+22,Process_pct_ User_Time,Process,183,0.07,0.27,dropped,Processor_pct_ User_Time,near-copy of the kept feature (|correlation| >= 0.99)
+23,Process_Virtual_Bytes Peak,Process,0,-0.05,0.11,kept,,
+24,Process_Page_File Bytes Peak,Process,0,0.16,-0.53,kept,,
+25,Process_IO_Other_Bytes_sec,Process,186,-0.33,0.23,kept,,
+26,Process_Private_Bytes,Process,0,0.33,-0.27,dropped,Process_Page_File Bytes,near-copy of the kept feature (|correlation| >= 0.99)
+27,Process_IO_Write_Bytes_sec,Process,117,-0.25,0.06,kept,,
+28,Process_Elapsed_Time,Process,0,,,dropped,,constant column
+29,Process_Virtual_Bytes,Process,0,-0.05,0.11,dropped,Process_Virtual_Bytes Peak,near-copy of the kept feature (|correlation| >= 0.99)
+30,Process_pct_ Processor_Time,Process,47,0.16,-0.31,kept,,
+31,Process_Creating Process ID,Process,0,,,dropped,,constant column
+32,Process_Pool Nonpaged Bytes,Process,0,0.2,-0.21,kept,,
+33,Process_Working Set,Process,0,0.27,-0.6,kept,,
+34,Process_Page Faults_sec,Process,232,-0.06,-0.15,kept,,
+35,Process_ID Process,Process,0,,,dropped,,constant column
+36,Process_IO Other Operations_sec,Process,246,-0.26,0.17,kept,,
+37,Process_IO Data Operations_sec,Process,331,-0.23,-0.32,kept,,
+38,Process_Thread Count,Process,0,0.08,0.6,kept,,
+39,Process_pct_ Privileged_Time,Process,36,-0.04,-0.28,dropped,Processor_pct_ User_Time,near-copy of the kept feature (|correlation| >= 0.99)
+40,Process_IO Data Bytes_sec,Process,244,-0.25,0.07,kept,,
+41,Process_IO Read Bytes_sec,Process,538,-0.18,-0.13,kept,,
+42,Process_Priority Base,Process,0,,,dropped,,constant column
+43,Process_Handle Count,Process,0,0.14,-0.65,kept,,
+44,Network_I(Intel R _82574L_GNC)TCP_APS,Network,0,0.11,-0.15,kept,,
+45,Network_I(Intel R _82574L_GNC) Packets Received Unknown,Network,0,,,dropped,,constant column
+46,Network_I(Intel R _82574L_GNC) Bytes Received sec,Network,11,-0.02,0.07,kept,,
+47,Network_I(Intel R _82574L_GNC) Bytes Sent sec,Network,11,-0.17,0.1,kept,,
+48,Network_I(Intel R _82574L_GNC) Packets Outbound Errors,Network,0,,,dropped,,constant column
+49,Network_I(Intel R _82574L_GNC) Packets Received Discarded,Network,0,,,dropped,,constant column
+50,Network_I(Intel R _82574L_GNC) Bytes Total sec,Network,11,-0.04,0.08,kept,,
+51,Network_I(Intel R _82574L_GNC) Packets Outbound Discarded,Network,0,,,dropped,,constant column
+52,Network_I(Intel R _82574L_GNC) TCP RSC Exceptions sec,Network,11,,,dropped,,constant column
+53,Network_I(Intel R _82574L_GNC) Packets Sent Unicast sec,Network,11,-0.16,0.07,kept,,
+54,Network_I(Intel R _82574L_GNC) Output Queue Length,Network,0,,,dropped,,constant column
+55,Network_I(Intel R _82574L_GNC) Packets Received sec,Network,11,-0.13,-0.05,kept,,
+56,Network_I(Intel R _82574L_GNC) Current Bandwidth,Network,0,0.01,,kept,,
+57,Network_I(Intel R _82574L_GNC) Packets sec,Network,11,-0.16,0.01,kept,,
+58,Network_I(Intel R _82574L_GNC) TCP Active RSC Connections,Network,0,-0.06,-0.66,kept,,
+59,Network_I(Intel R _82574L_GNC) Packets Sent sec,Network,11,-0.16,0.07,dropped,Network_I(Intel R _82574L_GNC) Packets Sent Unicast sec,near-copy of the kept feature (|correlation| >= 0.99)
+60,Network_I(Intel R _82574L_GNC) Packets Received Unicast sec,Network,11,-0.13,-0.05,dropped,Network_I(Intel R _82574L_GNC) Packets Received sec,near-copy of the kept feature (|correlation| >= 0.99)
+61,Network_I(Intel R _82574L_GNC) Packets Sent Non-Unicast sec,Network,11,,,dropped,,constant column
+62,Network_I(Intel R _82574L_GNC) Packets Received Non-Unicast sec,Network,11,,,dropped,,constant column
+63,Network_I(Intel R _82574L_GNC) TCP RSC Coalesced Packets sec,Network,11,,,dropped,,constant column
+64,Network_I(Intel R _82574L_GNC) Offloaded Connections,Network,0,,,dropped,,constant column
+65,Network_I(Intel R _82574L_GNC) Packets Received Errors,Network,0,,,dropped,,constant column
+66,Memory Pool Paged Bytes,Memory,0,0.27,-0.28,kept,,
+67,Memory Free & Zero Page List Bytes,Memory,0,-0.13,0.2,kept,,
+68,Memory Cache Bytes Peak,Memory,0,0.33,-0.27,kept,,
+69,Memory System Code Resident Bytes,Memory,0,-0.58,,kept,,
+70,Memory Available Bytes,Memory,0,-0.25,-0.16,kept,,
+71,Memory Commit Limit,Memory,0,0.48,0.61,kept,,
+72,Memory Transition Pages RePurposed sec,Memory,11,-0.02,0.08,kept,,
+73,Memory Pages Output sec,Memory,11,0.06,0.05,kept,,
+74,Memory Page Reads sec,Memory,11,0.0,0.24,kept,,
+75,Memory Demand Zero Faults sec,Memory,11,-0.08,-0.16,kept,,
+76,Memory Available KBytes,Memory,0,-0.25,-0.16,dropped,Memory Available Bytes,near-copy of the kept feature (|correlation| >= 0.99)
+77,Memory Pages sec,Memory,11,-0.02,0.24,kept,,
+78,Memory Cache Bytes,Memory,0,-0.32,-0.79,dropped,,time proxy (|correlation with ts| >= 0.7 among normal rows)
+79,Memory Pool Nonpaged Bytes,Memory,0,0.8,0.21,dropped,,time proxy (|correlation with ts| >= 0.7 among normal rows)
+80,Memory Page Faults sec,Memory,11,-0.08,-0.12,kept,,
+81,Memory Transition Faults sec,Memory,11,-0.04,0.04,kept,,
+82,Memory System Cache Resident Bytes,Memory,0,0.14,-0.79,dropped,,time proxy (|correlation with ts| >= 0.7 among normal rows)
+83,Memory Long-Term Average Standby Cache Lifetime (s),Memory,0,-0.1,-0.03,kept,,
+84,Memory Standby Cache Reserve Bytes,Memory,0,-0.22,-0.25,kept,,
+85,Memory Page Writes sec,Memory,11,0.07,0.05,dropped,Memory Pages Output sec,near-copy of the kept feature (|correlation| >= 0.99)
+86,Memory System Code Total Bytes,Memory,0,-0.58,,dropped,Memory System Code Resident Bytes,near-copy of the kept feature (|correlation| >= 0.99)
+87,Memory Standby Cache Core Bytes,Memory,0,0.28,0.32,kept,,
+88,Memory System Driver Resident Bytes,Memory,0,0.27,-0.48,kept,,
+89,Memory Standby Cache Normal Priority Bytes,Memory,0,-0.15,-0.72,dropped,,time proxy (|correlation with ts| >= 0.7 among normal rows)
+90,Memory Pool Paged Allocs,Memory,0,-0.53,,kept,,
+91,Memory Pool Nonpaged Allocs,Memory,0,-0.52,,dropped,Memory Pool Paged Allocs,near-copy of the kept feature (|correlation| >= 0.99)
+92,Memory pct_ Committed Bytes In Use,Memory,0,-0.35,0.29,kept,,
+93,Memory Free System Page Table Entries,Memory,0,0.37,-0.15,kept,,
+94,Memory Available MBytes,Memory,0,-0.25,-0.16,dropped,Memory Available Bytes,near-copy of the kept feature (|correlation| >= 0.99)
+95,Memory Modified Page List Bytes,Memory,0,-0.25,-0.05,kept,,
+96,Memory Cache Faults sec,Memory,11,-0.25,0.05,kept,,
+97,Memory Committed Bytes,Memory,0,0.37,0.35,kept,,
+98,Memory System Driver Total Bytes,Memory,0,0.92,0.02,dropped,,time proxy (|correlation with ts| >= 0.7 among normal rows)
+99,Memory Pages Input sec,Memory,11,-0.01,0.24,kept,,
+100,Memory Pool Paged Resident Bytes,Memory,0,-0.28,-0.78,dropped,,time proxy (|correlation with ts| >= 0.7 among normal rows)
+101,Memory Write Copies sec,Memory,11,-0.12,0.03,kept,,
+102,LogicalDisk(_Total) Avg  Disk Bytes Write,LogicalDisk,11,-0.08,-0.04,kept,,
+103,LogicalDisk(_Total) pct_ Idle Time,LogicalDisk,11,0.14,-0.2,kept,,
+104,LogicalDisk(_Total) Disk Reads sec,LogicalDisk,11,0.01,0.21,kept,,
+105,LogicalDisk(_Total) pct_ Free Space,LogicalDisk,0,-0.95,-0.98,dropped,,time proxy (|correlation with ts| >= 0.7 among normal rows)
+106,LogicalDisk(_Total) Disk Read Bytes sec,LogicalDisk,11,0.01,0.21,dropped,LogicalDisk(_Total) Disk Reads sec,near-copy of the kept feature (|correlation| >= 0.99)
+107,LogicalDisk(_Total) Avg  Disk sec Read,LogicalDisk,11,-0.17,0.24,kept,,
+108,LogicalDisk(_Total) Disk Writes sec,LogicalDisk,11,-0.17,0.13,kept,,
+109,LogicalDisk(_Total) Current Disk Queue Length,LogicalDisk,0,-0.03,0.02,kept,,
+110,LogicalDisk(_Total) Split IO Sec,LogicalDisk,11,-0.19,0.03,kept,,
+111,LogicalDisk(_Total) Free Megabytes,LogicalDisk,0,-0.92,-0.98,dropped,LogicalDisk(_Total) pct_ Free Space,near-copy of the kept feature (|correlation| >= 0.99)
+112,LogicalDisk(_Total) Avg  Disk sec Write,LogicalDisk,11,-0.11,0.11,kept,,
+113,LogicalDisk(_Total) Disk Bytes sec,LogicalDisk,11,-0.07,0.13,kept,,
+114,LogicalDisk(_Total) Avg  Disk Read Queue Length,LogicalDisk,11,-0.02,0.22,dropped,LogicalDisk(_Total) Disk Reads sec,near-copy of the kept feature (|correlation| >= 0.99)
+115,LogicalDisk(_Total) pct_ Disk Time,LogicalDisk,11,-0.14,0.21,kept,,
+116,LogicalDisk(_Total) Avg  Disk Bytes Read,LogicalDisk,11,-0.07,0.23,kept,,
+117,LogicalDisk(_Total) Avg  Disk Write Queue Length,LogicalDisk,11,-0.2,0.18,kept,,
+118,LogicalDisk(_Total) Avg  Disk Queue Length,LogicalDisk,11,-0.09,0.21,dropped,LogicalDisk(_Total) pct_ Disk Time,near-copy of the kept feature (|correlation| >= 0.99)
+119,LogicalDisk(_Total) pct_ Disk Read Time,LogicalDisk,11,-0.05,0.22,dropped,LogicalDisk(_Total) Disk Reads sec,near-copy of the kept feature (|correlation| >= 0.99)
+120,LogicalDisk(_Total) Disk Write Bytes sec,LogicalDisk,11,-0.18,0.08,kept,,
+121,LogicalDisk(_Total) Disk Transfers sec,LogicalDisk,11,-0.04,0.16,kept,,
+122,LogicalDisk(_Total) Avg  Disk Bytes Transfer,LogicalDisk,11,-0.14,-0.01,kept,,
+123,LogicalDisk(_Total) pct_ Disk Write Time,LogicalDisk,11,-0.24,0.18,dropped,LogicalDisk(_Total) Avg  Disk Write Queue Length,near-copy of the kept feature (|correlation| >= 0.99)
+124,LogicalDisk(_Total) Avg  Disk sec Transfer,LogicalDisk,11,-0.25,0.15,kept,,
