@@ -1,9 +1,9 @@
 # Cybersecurity Log Analysis and Intrusion Detection Dashboard
 ## Research Basis, Dataset Justification, Dataset Provenance, and Basic Project Plan
 
-> **Version 3 (final, 2026-10-02).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
+> **Version 3 (final, updated 2026-10-07).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository on 2026-10-07 (rows C23 and C24 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
 >
-> **Project name, project area, dataset files and the technical stack (Python, Pandas, Plotly, Dash, Git/GitHub) are unchanged from version 1.** No project library has been added or removed. The Appendix A verification script uses Pandas only and does not add a project dependency.
+> **Project name, project area, dataset files and the technical stack (Python, Pandas, Plotly, Dash, Git/GitHub) are unchanged from version 1.** No project library has been added or removed. The Appendix A verification script uses Pandas only and does not add a project dependency. NumPy is installed automatically with Pandas and is imported directly by six scripts in `src/` (Section 20, D10).
 
 ---
 
@@ -35,6 +35,8 @@ Type key: **REQUIRED** = correction needed for accuracy or safety of the analysi
 | C20 | Section 21, items 2, 3 and 8 | Corrected: the README was uploaded and checked; it holds only the main citation, so the eight-paper list is still to be added. Added the 30.7% vs 30.87% item | REQUIRED | Uploaded `README.md`; GitHub screenshot |
 | C21 | Sections 14, 19 | Wording: "this reviewer" replaced by "the external reviewer" so the text stays clear when read later | OPTIONAL | Editorial |
 | C22 | Section 13 | Added a progress note (steps 1 and 2 done, step 3 in progress, later steps not started). The development order itself is unchanged | OPTIONAL | Section 19 |
+| C23 | Sections 13, 19, 20, 21 | Brought up to date: 26 commits, the scripts and their check results, the cleaning, EDA and feature decisions (D11 to D17), and the open items | REQUIRED | Terminal output from Git Bash; `docs/eda_findings.md`; `docs/feature_set.csv` |
+| C24 | Header, Section 20 (D10) | Corrected: NumPy is not "absent". It is installed with Pandas and imported directly by six scripts; `requirements.txt` lists Pandas only | REQUIRED | `import numpy` in `src/build_features.py`, `clean_data.py`, `eda_correlation.py`, `eda_separation.py`, `features.py`, `schema_report.py` |
 
 **Suggestion not adopted:** the course syllabus (CUTM1018) also lists NumPy, Matplotlib and Seaborn. Adding them was suggested as optional. The user asked that libraries not change, so the stack stays as in version 1. This is recorded as an open item in Section 21.
 
@@ -568,7 +570,7 @@ Work in this order unless evidence shows a necessary adjustment:
 
 Do not jump directly to machine learning or dashboard development before understanding the data.
 
-**Progress (as of 2026-10-02):** steps 1 and 2 are done; step 3 is in progress (schema facts are recorded in Section 5.1, a formal data dictionary is not written yet); steps 4 to 16 have not started. See Section 19.
+**Progress (as of 2026-10-07):** steps 1 to 8 are done (scope, structure, schema, loading layer, cleaning, validation, EDA and feature engineering). Step 9 (the first detector) is next; steps 9 to 16 have not started. See Section 19.
 
 ---
 
@@ -768,36 +770,75 @@ Unless new evidence requires correction, implementation should use these stable 
 
 ---
 
-## 19. Work completed so far (as of 2026-10-02)
+## 19. Work completed so far (as of 2026-10-07)
 
-Evidence for this section comes from the commands the user ran in Git Bash and from screenshots of File Explorer and GitHub. Repository-specific claims are user-reported and/or screenshot-supported; the private GitHub repository could not be independently opened by the external reviewer.
+Evidence for this section: the terminal output that the user pasted from Git Bash (each command and its result), screenshots of File Explorer and GitHub, and files the user uploaded. The private GitHub repository itself was not opened by any reviewer, so repository-level statements rest on that output.
 
 **Audit (completed).** The project image, the plan, the syllabus and both CSV files were inspected. The ground-truth file was missing from the first upload and was supplied afterwards; the alignment check then passed. Findings and corrections are in Sections 0, 5.1 and 7.
 
-**Local repository**
-- Folder: `D:\CUTM\3rd_Sem\DAVP\Project\Cybersecurity_Log_Analysis_and_Intrusion_Detection_Dashboard` (it was empty before `git init`).
-- Git version 2.55.0.windows.3, branch `main`.
-- The two raw CSV files were reported by the user as copied from `D:\CUTM\3rd_Sem\DAVP\Project\DataSets` into `data/raw/`. The originals were left in place. This repository state could not be independently verified by the external reviewer.
-- `.gitignore` ignores `__pycache__/`, `*.pyc`, `.venv/`, `venv/`, `.ipynb_checkpoints/`, `.env`, `.vscode/`, `.DS_Store` and `Thumbs.db`. It does not ignore `data/`.
-- The user reports that `.gitattributes` contains `data/raw/*.csv -text` and that `git check-attr text` reports `unset` for both CSV files. The file contents could not be independently verified from the private repository.
-- The user reports that the SHA-256 of each original file, each copy in `data/raw/` and each committed version (`git show HEAD:...`) is identical (values in Section 5.1). The uploaded-file hashes are independently verified; the committed Git objects could not be independently verified by the external reviewer.
+**Environment**
+- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6, listed in `requirements.txt`. NumPy 2.5.3 was installed with Pandas.
+- Local folder: `D:\CUTM\3rd_Sem\DAVP\Project\Cybersecurity_Log_Analysis_and_Intrusion_Detection_Dashboard`.
 
-**Commits (reported by the user as all pushed; not independently verified by the external reviewer)**
+**GitHub**
+- Repository: `https://github.com/Ayu-creator25/Cybersecurity-Log-Analysis-and-Intrusion-Detection-Dashboard`, visibility **Private**, created without a README, `.gitignore` or license.
+- Description: "DAVP course project: log analytics and anomaly detection on the TON_IoT Windows 10 dataset, with a Plotly Dash dashboard."
+
+**Repository layout**
+- `data/raw/`: the two raw CSV files, committed, byte-for-byte identical to the originals (SHA-256 values in Section 5.1; `.gitattributes` rule `data/raw/*.csv -text`).
+- `data/processed/`: `windows10_clean.csv` and `features.csv`, ignored by Git and rebuilt by the scripts.
+- `docs/`: this plan, `data_dictionary.csv`, `feature_set.csv`, `eda_findings.md`.
+- `src/`: the scripts listed below. Also `README.md`, `requirements.txt`, `.gitignore`, `.gitattributes`.
+
+**Scripts and results** (run from the project folder with `python -m src.<name>`; the results are those printed in the user's terminal)
+
+| Script | Purpose | Result |
+|---|---|---|
+| `data_loader` | Read both raw files without changing them (`utf-8-sig`) | Shapes (35975, 127) and (11104, 2); first column named `ts` |
+| `schema_report` | Write `docs/data_dictionary.csv` | 127 rows; Memory 36, Process 28, LogicalDisk 23, Network 22, Processor 15, meta 3; 3,360 blank cells in 69 columns; 19 constant columns; 0 non-numeric feature columns |
+| `check_ground_truth` | Compare the ground truth with the attack rows | 11,104 matched, 0 differences, PASS |
+| `blank_report` | Show where the blank cells are | 761 rows with a blank; 2.36% of normal rows and 1.56% of attack rows; 11 rows have all 69 blank-capable columns blank |
+| `clean_data` | Write `data/processed/windows10_clean.csv` | 35,975 rows, 129 columns, 13 checks PASS |
+| `eda_time`, `eda_drift`, `eda_separation`, `eda_correlation` | Exploratory analysis | Results in `docs/eda_findings.md` |
+| `features` | Choose the features a detector may use; write `docs/feature_set.csv` | 80 kept, 19 constant, 18 near-copies, 7 time proxies, 8 checks PASS |
+| `build_features` | Write `data/processed/features.csv` | 35,975 rows, 84 columns, 2,954 missing values in 709 rows, 9 checks PASS |
+
+**Commits (all pushed; 26 at the time of writing)**
 
 | Commit | Message |
 |---|---|
 | `1751174` | Add .gitignore and .gitattributes |
 | `a4fdb68` | Add raw TON_IoT Windows 10 dataset and ground truth |
 | `5dd3b82` | Add README with dataset source and citation |
+| `5bc0d56` | Add final research plan |
+| `186d735` | Add full TON_IoT citation list and link to research plan |
+| `ccefc5b` | Add requirements.txt with pandas |
+| `6604940` | Add raw data loader |
+| `12f83c5` | Add schema report and data dictionary |
+| `b2ab54e` | Add ground-truth alignment check |
+| `cd7b4d7` | Update README status and add how-to-run |
+| `75fdc8a` | Add blank-cell distribution report |
+| `94fd49f` | Ignore generated data/processed folder |
+| `bbff09b` | Add data cleaning script with validation |
+| `4624c3b` | Update README: cleaning step and run instructions |
+| `60b4c49` | Add time-distribution EDA script |
+| `ecf5f50` | Add normal-behaviour drift EDA script |
+| `04c3213` | Add attack-vs-normal separation EDA script |
+| `576b4d0` | Add feature correlation EDA script |
+| `e421e68` | Add EDA findings document |
+| `1078091` | Update README: EDA step and run instructions |
+| `81de18f` | Add feature selection (87 kept features) with decision list |
+| `44cfe73` | Drop time-proxy features from the feature set (80 kept) |
+| `3b30b11` | Add feature table builder with validation |
+| `9974779` | Add within-attack-period drift comparison to EDA 2 |
+| `3a590fe` | Add post-feature-selection findings to EDA document |
+| `aeefa43` | Update README: feature engineering step and run instructions |
 
-**GitHub (screenshot-supported where visible; private repository not independently opened by the external reviewer)**
-- Repository: `https://github.com/Ayu-creator25/Cybersecurity-Log-Analysis-and-Intrusion-Detection-Dashboard`, visibility **Private**, created without a README, `.gitignore` or license.
-- Description: "DAVP course project: log analytics and anomaly detection on the TON_IoT Windows 10 dataset, with a Plotly Dash dashboard."
-- `git push -u origin main` succeeded. A screenshot of the repository page shows `data/raw`, `.gitattributes`, `.gitignore`, `README.md`, the rendered README and three commits.
+A file cannot list the commit that adds it, so the commit that contains this updated plan is not in the table.
 
-**README.md** contains the project title and area, the course, a status note, dataset source and file descriptions with the SHA-256 values, steps to obtain the data, the academic-use terms, and the main TrustCom 2020 citation. It states that the full list of papers is on the UNSW page.
+**README.md** holds the project title and area, the course, the status, the run instructions, the dataset description with the SHA-256 values, the steps to obtain the data, the academic-use terms, the main citation and all eight papers asked for by the UNSW page, and the link to this plan.
 
-**Not done yet:** a formal data dictionary; the `docs/` folder with this plan; the full list of eight citations in the README; the Python project structure and loading code; cleaning; EDA; everything after.
+**Not done yet:** the first detector and its evaluation, the refinement of the detection method, the Plotly charts, the Dash dashboard, tests, the final documentation and the deployment preparation.
 
 ---
 
@@ -814,20 +855,30 @@ Evidence for this section comes from the commands the user ran in Git Bash and f
 | D7 | Evaluation uses `label = 0` from the main file as the normal class; the ground truth is a cross-check | Implementation agent | Ground truth contains no normal rows and is redundant with the attack rows |
 | D8 | Loaders read with `encoding="utf-8-sig"` | Implementation agent | BOM in both files |
 | D9 | Raw column names stay unchanged; a cleaned-name mapping is added in the cleaned layer (recommendation, optional) | Implementation agent | Names are inconsistent but raw data must stay untouched |
-| D10 | Matplotlib, Seaborn and NumPy are not added | User | Libraries must not change |
+| D10 | The project stack is not extended: Matplotlib and Seaborn are not used. NumPy is installed automatically with Pandas and is imported directly by six scripts in `src/`; `requirements.txt` lists Pandas only | User (stack), implementation agent (NumPy note) | Libraries must not change. Pandas needs NumPy, so it cannot be left out of the installation; the direct imports are a convenience and can be replaced if the user prefers (open item 9) |
+| D11 | Cleaning drops no rows; whitespace-only cells become missing values | Implementation agent | Blanks occur in both classes (2.36% of normal rows, 1.56% of attack rows); dropping the 761 rows would remove 2 of the 15 mitm rows |
+| D12 | `data/processed/` is not stored in Git; scripts rebuild it and check the result | Implementation agent | The files are large and fully reproducible |
+| D13 | Near-copy rule: absolute Spearman correlation of at least 0.99; keep the feature with the fewest blank cells, and the first in the file on a tie | Implementation agent | `docs/eda_findings.md` section 4; the label is not used |
+| D14 | Time-proxy rule: drop a feature whose absolute Spearman correlation with `ts` is at least 0.7 among normal rows in the early or the late period (7 features) | Implementation agent | `docs/eda_findings.md` section 6.2; the cut-off is a judgment call (open item 5) |
+| D15 | The final feature set has 80 features (`docs/feature_set.csv`). `features.csv` holds a row id, `ts`, `label`, `type` and the 80 features; missing values stay missing until the detector fills them from training rows | Implementation agent | Avoids using test rows to fill values |
+| D16 | The README is updated in the same commit as the work it describes | User | Fewer README-only commits |
+| D17 | Raw column names stay unchanged in the cleaned data and in `features.csv`; the cleaned-name mapping suggested in D9 is not built | Implementation agent | All scripts work with the raw names |
 
 ---
 
 ## 21. Open items and unknowns
 
 1. **Redistribution rights (unknown):** the UNSW page grants academic research use and states commercial-use permission requirements, but it does not expressly grant redistribution/re-publication rights for downloaded CSV files. The repository is private. A decision is needed before it becomes public.
-2. **Full citation list in README (open):** the plan contains the full eight-paper list from the official UNSW page (checked against the page on 2026-10-02). The README, which was uploaded and checked, holds only the main TrustCom 2020 citation. The eight papers must still be added to it.
-3. **Sources 3 and 4:** verified on 2026-10-02 (Section 16); no source-verification action remains open for these references.
-4. **Syllabus coverage (unknown):** the supplied syllabus teaches NumPy, Pandas, Matplotlib, Seaborn, Plotly, Dash, GitHub/project documentation and AI-assisted development. The project stack is frozen without NumPy, Matplotlib or Seaborn. Whether the assessment requires this project to use every course library is not stated in the supplied syllabus.
-5. **Data dictionary (open):** the official feature descriptions from UNSW have not been fetched.
-6. **Normal-behaviour drift (open):** whether normal rows before and after 2019-04-23 differ must be checked in EDA.
-7. **Anomaly framing (open):** whether an unsupervised detector suits a 30.9% attack share must be checked in EDA.
-8. **Attack share, 30.87% vs 30.7% (open, minor):** Source 4 reports 30.7% for the Windows 10 subset; the local file gives 30.87%. The cause is unknown (a different file version or a rounding or counting difference). The local file is the authority.
+2. **Syllabus coverage (unknown):** the supplied syllabus teaches NumPy, Pandas, Matplotlib, Seaborn, Plotly, Dash, GitHub/project documentation and AI-assisted development. The project stack is frozen without Matplotlib and Seaborn. Whether the assessment requires this project to use every course library is not stated in the supplied syllabus.
+3. **Official feature descriptions (open):** the descriptions published by UNSW have not been fetched. `docs/data_dictionary.csv` was built from the data itself (types, blanks, distinct values, range) and says nothing about the meaning of a feature.
+4. **Cause of the drift (unknown):** normal behaviour changes between the early and late period and also inside the attack period (`docs/eda_findings.md` sections 2 and 6.1). The cause is not known.
+5. **Time-proxy cut-off (open):** the cut-off of 0.7 (D14) is a judgment call. The main evaluation must be repeated once with 0.5 (`docs/eda_findings.md` section 6.4).
+6. **Detector design and anomaly framing (open):** attacks are 30.9% of all rows, and no single feature separates every attack type. Whether an unsupervised detector suits this data, how it is trained and how it is evaluated are decided in the baseline milestone.
+7. **Attack share, 30.87% vs 30.7% (open, minor):** Source 4 reports 30.7% for the Windows 10 subset; the local file gives 30.87%. The cause is unknown. The local file is the authority.
+8. **mitm (note):** only 15 rows; its results are indicative only.
+9. **Direct NumPy imports (decision for the user):** six scripts import NumPy directly. Option A (recommended): keep them and keep the note in D10, because Pandas installs NumPy anyway. Option B: rewrite those scripts with Pandas only, which is possible but adds work and no analytical value.
+
+Closed since version 3 was first written: the eight-paper citation list is in the README (commit `186d735`); sources 3 and 4 are verified (Section 16); a local data dictionary exists; the questions "does normal behaviour drift?" and "is a 30.9% attack share a problem for the choice of method?" were studied in the EDA, with the results above.
 
 ---
 
@@ -839,7 +890,7 @@ Please check the following and mark each claim as *confirmed*, *contradicted* or
 2. The source and licensing statements in Sections 2 and 4 against https://research.unsw.edu.au/projects/toniot-datasets and the TrustCom 2020 DOI.
 3. Every number in Sections 5 and 5.1, by running Appendix A on the two CSV files. The expected SHA-256 values are in Section 5.1.
 4. That each change in Section 0 is justified by the facts in Section 5.1, and that no change alters the title, area, dataset files or libraries.
-5. The Git/GitHub statements in Section 19 against the repository (three commits, private visibility, `data/raw/`, `.gitattributes`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
+5. The Git/GitHub statements in Section 19 against the repository (the 26 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
 6. Anything in this document stated as a fact that is really an inference or a recommendation.
 
 Evidence labels used in this document: **verified** (computed from the files or read from the official page), **inference** (reasoned from verified facts), **recommendation** (a proposed choice), **unknown** (not checked).
