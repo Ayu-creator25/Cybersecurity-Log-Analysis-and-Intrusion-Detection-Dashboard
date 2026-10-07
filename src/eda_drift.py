@@ -5,12 +5,15 @@ Late normal  = normal rows from the first attack on (2019-04-23 to 2019-04-29).
 For each feature we measure how many late-normal values fall outside the range
 that holds the middle 98% (1st to 99th percentile) of early-normal values.
 With no change in behaviour that share would be about 2%.
+A second comparison does the same inside the attack period: normal rows of
+2019-04-23/24 against normal rows of 2019-04-25 to 2019-04-29.
 """
 import pandas as pd
 
 from src.clean_data import OUT_FILE, feature_columns
 
 HELPER_COLUMNS = ("source_row", "n_blank")  # added by clean_data, not measurements
+SPLIT_TS = pd.Timestamp("2019-04-25", tz="UTC").timestamp()  # splits the attack period in two
 
 
 def split_normal():
@@ -64,3 +67,12 @@ if __name__ == "__main__":
     print()
     print("top 12 features that changed most:")
     print(table.head(12).to_string(index=False))
+
+    print()
+    print("second comparison, normal rows inside the attack period (04-23/24 against 04-25 to 04-29)")
+    first_days, last_days = late[late["ts"] < SPLIT_TS], late[late["ts"] >= SPLIT_TS]
+    inner = drift_table(first_days, last_days)["percent_outside_early_range"]
+    print("rows:", len(first_days), "against", len(last_days))
+    print("features with more than 10% outside the first range:", int((inner > 10).sum()))
+    print("features with more than 50% outside the first range:", int((inner > 50).sum()))
+    print("median of the percent outside:", round(float(inner.median()), 1))
