@@ -6,7 +6,7 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Done: dataset and schema verification, the loading layer, data cleaning with validation, and exploratory analysis (results in `docs/eda_findings.md`). Feature engineering, detection and the dashboard are not built yet.
+Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis and feature engineering (results in `docs/eda_findings.md` and `docs/feature_set.csv`). The detector, its evaluation and the dashboard are not built yet.
 
 ## How to run
 
@@ -24,6 +24,8 @@ python -m src.eda_time
 python -m src.eda_drift
 python -m src.eda_separation
 python -m src.eda_correlation
+python -m src.features
+python -m src.build_features
 ```
 
 - `src.schema_report` writes `docs/data_dictionary.csv`.
@@ -31,6 +33,9 @@ python -m src.eda_correlation
 - `src.blank_report` shows where the blank cells are.
 - `src.clean_data` writes the cleaned copy to `data/processed/windows10_clean.csv` and prints PASS when 13 checks against the raw file succeed. That folder is not stored in Git, so run this command to create it.
 - `src.eda_time`, `src.eda_drift`, `src.eda_separation` and `src.eda_correlation` print the exploratory results. They read the cleaned file, so run `src.clean_data` first.
+- `src.features` chooses the 80 features a detector may use and writes the decision for every column to `docs/feature_set.csv`.
+- `src.build_features` writes `data/processed/features.csv` (row id, `ts`, `label`, `type` and the 80 features) and prints PASS when 9 checks succeed.
+
 
 ## Dataset
 
