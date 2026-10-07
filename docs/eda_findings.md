@@ -62,3 +62,40 @@ Method: rank-based AUC for each of the 105 features, attack rows against normal 
 2. Leave out the 19 constant columns and keep one feature per near-copy group.
 3. Handle the roughly 20 features that drift between the periods on purpose, and decide how in the feature-engineering step.
 4. Evaluate with the `label` and `type` columns of the main file. Report precision and recall per attack type, not accuracy alone, and treat mitm (15 rows) with great care.
+
+## 6. Update after the feature selection (2026-10-07)
+
+Scripts: `src/eda_drift.py` (second comparison), `src/features.py`, `src/build_features.py`. This section adds to sections 2 and 5.
+
+### 6.1 Normal behaviour also changes inside the attack period
+
+- **Verified:** Normal rows of 2019-04-23 and 24 (5,580 rows) compared with normal rows of 2019-04-25 to 29 (2,534 rows): 32 features have more than 10% of their values outside the first range, 6 have more than 50%, and the median share outside is 3.6%. The comparison in section 2 (early against late) gave 20 features and 13 features.
+- **Inference:** The state of the machine changes steadily over time. It is not a single step between two periods.
+
+### 6.2 Some features work like clocks
+
+- **Verified:** Among the 87 features left after removing constant columns and near-copies, 7 have an absolute Spearman correlation with `ts` of at least 0.7 among normal rows, in the early period or in the late period (early / late):
+  - LogicalDisk(_Total) pct_ Free Space: -0.95 / -0.98
+  - Memory System Driver Total Bytes: 0.92 / 0.02
+  - Memory Pool Nonpaged Bytes: 0.80 / 0.21
+  - Memory Cache Bytes: -0.32 / -0.79
+  - Memory System Cache Resident Bytes: 0.14 / -0.79
+  - Memory Pool Paged Resident Bytes: -0.28 / -0.78
+  - Memory Standby Cache Normal Priority Bytes: -0.15 / -0.72
+- **Inference:** A detector could read the time from these features. Each attack type has its own time block (section 1), so the time would give away the attack type without any real detection.
+- **Verified:** The best feature of password (Memory Cache Bytes), injection (Memory System Driver Total Bytes) and xss (Memory Pool Nonpaged Bytes) in section 3 are among these 7 features.
+- **Inference:** The separation scores of those three attack types are partly a time effect.
+- **Unknown:** Whether the cut-off of 0.7 is the best one. It is a judgment call.
+
+### 6.3 Final feature set
+
+- **Verified:** Of the 124 measurement columns, 80 are kept, 19 are constant, 18 are near-copies of a kept feature and 7 are time proxies. The 80 kept features are Memory 25, Process 20, LogicalDisk 16, Processor 10 and Network 9. Every column with its reason is in `docs/feature_set.csv`.
+- **Verified:** `src.build_features` writes `data/processed/features.csv` with 35,975 rows and 84 columns (row id, `ts`, `label`, `type` and the 80 features). It holds 2,954 missing values in 709 rows.
+- **Decision:** `ts`, `label` and `type` are never features. Missing values stay missing, and the detector fills them using training rows only.
+
+### 6.4 Consequences for the evaluation (recommendations)
+
+1. Compare each attack type with normal rows from the same dates, and report results for each attack type separately.
+2. Repeat the main evaluation once with a stricter time-proxy cut-off of 0.5, to see whether the conclusions depend on the 0.7 choice.
+3. Do not train a detector on the first three days alone.
+4. Treat the results for mitm (15 rows) as indicative only.
