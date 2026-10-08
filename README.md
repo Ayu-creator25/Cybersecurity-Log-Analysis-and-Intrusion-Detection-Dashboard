@@ -6,7 +6,7 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis and feature engineering (results in `docs/eda_findings.md` and `docs/feature_set.csv`). The detector, its evaluation and the dashboard are not built yet.
+Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering and the train/test split (results in `docs/eda_findings.md` and `docs/feature_set.csv`). The detector, its evaluation and the dashboard are not built yet.
 
 ## How to run
 
@@ -26,6 +26,7 @@ python -m src.eda_separation
 python -m src.eda_correlation
 python -m src.features
 python -m src.build_features
+python -m src.split
 ```
 
 - `src.schema_report` writes `docs/data_dictionary.csv`.
@@ -35,6 +36,7 @@ python -m src.build_features
 - `src.eda_time`, `src.eda_drift`, `src.eda_separation` and `src.eda_correlation` print the exploratory results. They read the cleaned file, so run `src.clean_data` first.
 - `src.features` chooses the 80 features a detector may use and writes the decision for every column to `docs/feature_set.csv`.
 - `src.build_features` writes `data/processed/features.csv` (row id, `ts`, `label`, `type` and the 80 features) and prints PASS when 9 checks succeed.
+- `src.split` defines the train/test split for the detector (train: normal rows of 2019-04-23 and 24; test: every row from 2019-04-25) and prints PASS when 9 checks succeed.
 
 
 ## Dataset

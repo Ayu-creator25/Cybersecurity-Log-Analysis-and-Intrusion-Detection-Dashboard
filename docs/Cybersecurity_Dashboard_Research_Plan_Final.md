@@ -1,9 +1,9 @@
 # Cybersecurity Log Analysis and Intrusion Detection Dashboard
 ## Research Basis, Dataset Justification, Dataset Provenance, and Basic Project Plan
 
-> **Version 3 (final, updated 2026-10-07).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository on 2026-10-07 (rows C23 and C24 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
+> **Version 3 (final, updated 2026-10-08).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository on 2026-10-07 and 2026-10-08 (rows C23 to C26 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
 >
-> **Project name, project area, dataset files and the technical stack (Python, Pandas, Plotly, Dash, Git/GitHub) are unchanged from version 1.** No project library has been added or removed. The Appendix A verification script uses Pandas only and does not add a project dependency. NumPy is installed automatically with Pandas and is imported directly by six scripts in `src/` (Section 20, D10).
+> **Project name, project area and dataset files are unchanged from version 1. The core stack (Python, Pandas, Plotly, Dash, Git/GitHub) is unchanged.** On 2026-10-08 the user confirmed that further libraries may be added when they make the work easier; each one is listed in `requirements.txt` and in Section 20 (D18). So far `requirements.txt` lists Pandas and NumPy. The Appendix A verification script uses Pandas only.
 
 ---
 
@@ -14,7 +14,7 @@ Type key: **REQUIRED** = correction needed for accuracy or safety of the analysi
 | ID | Where | Change | Type | Evidence |
 |---|---|---|---|---|
 | C1 | Sections 1, 2, 3, 4, 6, 8, 10, 11, 12, 15, 17 | Text kept exactly as in version 1 | UNCHANGED | Compared section by section against version 1 on 2026-10-02; these sections are identical |
-| C2 | Project identity, stack | Project title, project area, dataset files and libraries (Pandas, Plotly, Dash) not changed | UNCHANGED | Version 1 Section 1; the project image (course list, row 23) was inspected by the implementation agent on 2026-10-02 and shows the same title and area (the external reviewer did not have the image) |
+| C2 | Project identity, stack | Project title, project area, dataset files and the core libraries (Pandas, Plotly, Dash) not changed | UNCHANGED | Version 1 Section 1; the project image (course list, row 23) was inspected by the implementation agent on 2026-10-02 and shows the same title and area (the external reviewer did not have the image) |
 | C3 | Section 5 | Added audit facts: timestamp order, time gaps, attack types confined to specific days, whitespace pattern, constant columns, file encoding | REQUIRED | Section 5.1 and Appendix A |
 | C4 | Section 7.1 | The 127 vs 124 difference is explained as 3 non-feature columns plus 124 feature columns | OPTIONAL | Column count in Section 5.1 |
 | C5 | Section 7.2 | Added exact whitespace pattern and the rule to exclude constant columns from detection inputs | DECISION | Section 5.1; D6 records the exclusion as an implementation decision |
@@ -36,9 +36,11 @@ Type key: **REQUIRED** = correction needed for accuracy or safety of the analysi
 | C21 | Sections 14, 19 | Wording: "this reviewer" replaced by "the external reviewer" so the text stays clear when read later | OPTIONAL | Editorial |
 | C22 | Section 13 | Added a progress note (steps 1 and 2 done, step 3 in progress, later steps not started). The development order itself is unchanged | OPTIONAL | Section 19 |
 | C23 | Sections 13, 19, 20, 21 | Brought up to date: 26 commits, the scripts and their check results, the cleaning, EDA and feature decisions (D11 to D17), and the open items | REQUIRED | Terminal output from Git Bash; `docs/eda_findings.md`; `docs/feature_set.csv` |
-| C24 | Header, Section 20 (D10) | Corrected: NumPy is not "absent". It is installed with Pandas and imported directly by six scripts; `requirements.txt` lists Pandas only | REQUIRED | `import numpy` in `src/build_features.py`, `clean_data.py`, `eda_correlation.py`, `eda_separation.py`, `features.py`, `schema_report.py` |
+| C24 | Header, Section 20 (D10) | Corrected: NumPy is not "absent". It is installed with Pandas and imported directly by six scripts; at that time `requirements.txt` listed Pandas only (changed again in C25) | REQUIRED | `import numpy` in `src/build_features.py`, `clean_data.py`, `eda_correlation.py`, `eda_separation.py`, `features.py`, `schema_report.py` |
+| C25 | Header, Sections 20 and 21, "Suggestion not adopted" | Library policy clarified by the user on 2026-10-08: Pandas, Plotly and Dash stay as the core, and other libraries may be added when they make the work easier. Decisions D1 and D10 reworded, D18 added, open item 9 closed, `requirements.txt` now lists NumPy | REQUIRED | User message of 2026-10-08; `requirements.txt` (`pandas==3.0.6`, `numpy==2.5.3`) |
+| C26 | Sections 13, 19, 20 | Train/test split added (`src/split.py`, decisions D19 and D20), commit list extended to 27 | OPTIONAL | `python -m src.split`: 9 checks PASS in the user's terminal |
 
-**Suggestion not adopted:** the course syllabus (CUTM1018) also lists NumPy, Matplotlib and Seaborn. Adding them was suggested as optional. The user asked that libraries not change, so the stack stays as in version 1. This is recorded as an open item in Section 21.
+**Suggestion not adopted:** the course syllabus (CUTM1018) also lists NumPy, Matplotlib and Seaborn. Adding them was suggested as optional. At first this was read as "no new libraries"; on 2026-10-08 the user explained that the core libraries stay and more may be added to make the work easier. NumPy is now listed in `requirements.txt`; Matplotlib and Seaborn are not used yet (Section 20, D18).
 
 ---
 
@@ -570,7 +572,7 @@ Work in this order unless evidence shows a necessary adjustment:
 
 Do not jump directly to machine learning or dashboard development before understanding the data.
 
-**Progress (as of 2026-10-07):** steps 1 to 8 are done (scope, structure, schema, loading layer, cleaning, validation, EDA and feature engineering). Step 9 (the first detector) is next; steps 9 to 16 have not started. See Section 19.
+**Progress (as of 2026-10-08):** steps 1 to 8 are done (scope, structure, schema, loading layer, cleaning, validation, EDA and feature engineering), and the train/test split for the detector is defined (`src/split.py`). Step 9 (the first detector) is next; steps 9 to 16 have not started. See Section 19.
 
 ---
 
@@ -770,14 +772,14 @@ Unless new evidence requires correction, implementation should use these stable 
 
 ---
 
-## 19. Work completed so far (as of 2026-10-07)
+## 19. Work completed so far (as of 2026-10-08)
 
 Evidence for this section: the terminal output that the user pasted from Git Bash (each command and its result), screenshots of File Explorer and GitHub, and files the user uploaded. The private GitHub repository itself was not opened by any reviewer, so repository-level statements rest on that output.
 
 **Audit (completed).** The project image, the plan, the syllabus and both CSV files were inspected. The ground-truth file was missing from the first upload and was supplied afterwards; the alignment check then passed. Findings and corrections are in Sections 0, 5.1 and 7.
 
 **Environment**
-- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6, listed in `requirements.txt`. NumPy 2.5.3 was installed with Pandas.
+- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6 and NumPy 2.5.3, both listed in `requirements.txt`.
 - Local folder: `D:\CUTM\3rd_Sem\DAVP\Project\Cybersecurity_Log_Analysis_and_Intrusion_Detection_Dashboard`.
 
 **GitHub**
@@ -802,8 +804,9 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 | `eda_time`, `eda_drift`, `eda_separation`, `eda_correlation` | Exploratory analysis | Results in `docs/eda_findings.md` |
 | `features` | Choose the features a detector may use; write `docs/feature_set.csv` | 80 kept, 19 constant, 18 near-copies, 7 time proxies, 8 checks PASS |
 | `build_features` | Write `data/processed/features.csv` | 35,975 rows, 84 columns, 2,954 missing values in 709 rows, 9 checks PASS |
+| `split` | Define the train/test split for the detector (`docs/eda_findings.md` 6.4) | Train 5,580 normal rows (2019-04-23/24); test 12,786 rows from 2019-04-25 (2,534 normal, 10,252 attack); 852 attack rows of 04-23/24 not evaluated; 9 checks PASS |
 
-**Commits (all pushed; 26 at the time of writing)**
+**Commits (all pushed; 27 at the time of writing)**
 
 | Commit | Message |
 |---|---|
@@ -833,6 +836,7 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 | `9974779` | Add within-attack-period drift comparison to EDA 2 |
 | `3a590fe` | Add post-feature-selection findings to EDA document |
 | `aeefa43` | Update README: feature engineering step and run instructions |
+| `80a1b3a` | Update research plan to match the repository (decisions D11-D17) |
 
 A file cannot list the commit that adds it, so the commit that contains this updated plan is not in the table.
 
@@ -846,7 +850,7 @@ A file cannot list the commit that adds it, so the commit that contains this upd
 
 | ID | Decision | Made by | Reason |
 |---|---|---|---|
-| D1 | Project title, project area, dataset files and libraries stay exactly as in version 1 | User | Fixed project identity |
+| D1 | Project title, project area and dataset files stay exactly as in version 1; the core libraries (Pandas, Plotly, Dash) stay too, and other libraries may be added (D18) | User | Fixed project identity |
 | D2 | The project folder is the Git repository; branch `main`; GitHub repository private | User | Project workflow |
 | D3 | Raw CSV files are committed in `data/raw/` | User | Reproducibility; size is below GitHub's file-size warning threshold (general knowledge, not re-verified in this session) |
 | D4 | `.gitattributes` rule `data/raw/*.csv -text` | Implementation agent | CRLF files must not be altered by Git |
@@ -855,7 +859,7 @@ A file cannot list the commit that adds it, so the commit that contains this upd
 | D7 | Evaluation uses `label = 0` from the main file as the normal class; the ground truth is a cross-check | Implementation agent | Ground truth contains no normal rows and is redundant with the attack rows |
 | D8 | Loaders read with `encoding="utf-8-sig"` | Implementation agent | BOM in both files |
 | D9 | Raw column names stay unchanged; a cleaned-name mapping is added in the cleaned layer (recommendation, optional) | Implementation agent | Names are inconsistent but raw data must stay untouched |
-| D10 | The project stack is not extended: Matplotlib and Seaborn are not used. NumPy is installed automatically with Pandas and is imported directly by six scripts in `src/`; `requirements.txt` lists Pandas only | User (stack), implementation agent (NumPy note) | Libraries must not change. Pandas needs NumPy, so it cannot be left out of the installation; the direct imports are a convenience and can be replaced if the user prefers (open item 9) |
+| D10 | NumPy is a listed dependency (`numpy==2.5.3` in `requirements.txt`); six scripts in `src/` import it directly. Matplotlib and Seaborn are not used so far | Implementation agent | Pandas installs NumPy anyway, so the requirements file now matches the imports |
 | D11 | Cleaning drops no rows; whitespace-only cells become missing values | Implementation agent | Blanks occur in both classes (2.36% of normal rows, 1.56% of attack rows); dropping the 761 rows would remove 2 of the 15 mitm rows |
 | D12 | `data/processed/` is not stored in Git; scripts rebuild it and check the result | Implementation agent | The files are large and fully reproducible |
 | D13 | Near-copy rule: absolute Spearman correlation of at least 0.99; keep the feature with the fewest blank cells, and the first in the file on a tie | Implementation agent | `docs/eda_findings.md` section 4; the label is not used |
@@ -863,22 +867,24 @@ A file cannot list the commit that adds it, so the commit that contains this upd
 | D15 | The final feature set has 80 features (`docs/feature_set.csv`). `features.csv` holds a row id, `ts`, `label`, `type` and the 80 features; missing values stay missing until the detector fills them from training rows | Implementation agent | Avoids using test rows to fill values |
 | D16 | The README is updated in the same commit as the work it describes | User | Fewer README-only commits |
 | D17 | Raw column names stay unchanged in the cleaned data and in `features.csv`; the cleaned-name mapping suggested in D9 is not built | Implementation agent | All scripts work with the raw names |
+| D18 | Library policy: Python, Pandas, Plotly and Dash are the core and stay. Other libraries may be added when they make the work easier. Each one is listed in `requirements.txt` and recorded in this register | User | The user's clarification of 2026-10-08 |
+| D19 | Train/test split: train on the normal rows of 2019-04-23 and 24 (5,580 rows); test on every row from 2019-04-25 (2,534 normal, 10,252 attack); the 852 attack rows of 04-23/24 (scanning and most of dos) are not evaluated; the first three days are not used | Implementation agent | Normal behaviour drifts (`docs/eda_findings.md` sections 2 and 6.1), so attack and normal rows are compared on the same dates; training uses normal rows only |
+| D20 | Detector progression: first a simple statistical baseline, then a detector from scikit-learn for comparison (the library is added to `requirements.txt` when it is first used) | Implementation agent | Section 11 asks for a transparent baseline first; D18 allows the extra library |
 
 ---
 
 ## 21. Open items and unknowns
 
 1. **Redistribution rights (unknown):** the UNSW page grants academic research use and states commercial-use permission requirements, but it does not expressly grant redistribution/re-publication rights for downloaded CSV files. The repository is private. A decision is needed before it becomes public.
-2. **Syllabus coverage (unknown):** the supplied syllabus teaches NumPy, Pandas, Matplotlib, Seaborn, Plotly, Dash, GitHub/project documentation and AI-assisted development. The project stack is frozen without Matplotlib and Seaborn. Whether the assessment requires this project to use every course library is not stated in the supplied syllabus.
+2. **Syllabus coverage (unknown):** the supplied syllabus teaches NumPy, Pandas, Matplotlib, Seaborn, Plotly, Dash, GitHub/project documentation and AI-assisted development. The core stack has no Matplotlib or Seaborn; D18 allows adding them if the course requires them or they help. Whether the assessment requires this project to use every course library is not stated in the supplied syllabus.
 3. **Official feature descriptions (open):** the descriptions published by UNSW have not been fetched. `docs/data_dictionary.csv` was built from the data itself (types, blanks, distinct values, range) and says nothing about the meaning of a feature.
 4. **Cause of the drift (unknown):** normal behaviour changes between the early and late period and also inside the attack period (`docs/eda_findings.md` sections 2 and 6.1). The cause is not known.
 5. **Time-proxy cut-off (open):** the cut-off of 0.7 (D14) is a judgment call. The main evaluation must be repeated once with 0.5 (`docs/eda_findings.md` section 6.4).
 6. **Detector design and anomaly framing (open):** attacks are 30.9% of all rows, and no single feature separates every attack type. Whether an unsupervised detector suits this data, how it is trained and how it is evaluated are decided in the baseline milestone.
 7. **Attack share, 30.87% vs 30.7% (open, minor):** Source 4 reports 30.7% for the Windows 10 subset; the local file gives 30.87%. The cause is unknown. The local file is the authority.
 8. **mitm (note):** only 15 rows; its results are indicative only.
-9. **Direct NumPy imports (decision for the user):** six scripts import NumPy directly. Option A (recommended): keep them and keep the note in D10, because Pandas installs NumPy anyway. Option B: rewrite those scripts with Pandas only, which is possible but adds work and no analytical value.
 
-Closed since version 3 was first written: the eight-paper citation list is in the README (commit `186d735`); sources 3 and 4 are verified (Section 16); a local data dictionary exists; the questions "does normal behaviour drift?" and "is a 30.9% attack share a problem for the choice of method?" were studied in the EDA, with the results above.
+Closed since version 3 was first written: the question of direct NumPy imports (NumPy is now listed in `requirements.txt`, D10 and D18); the eight-paper citation list is in the README (commit `186d735`); sources 3 and 4 are verified (Section 16); a local data dictionary exists; the questions "does normal behaviour drift?" and "is a 30.9% attack share a problem for the choice of method?" were studied in the EDA, with the results above.
 
 ---
 
@@ -889,8 +895,8 @@ Please check the following and mark each claim as *confirmed*, *contradicted* or
 1. The project title and area in Section 1 against the project image (course project list, row 23: "Cybersecurity Log Analysis and Intrusion Detection Dashboard" / "Log Analytics, Anomaly Detection").
 2. The source and licensing statements in Sections 2 and 4 against https://research.unsw.edu.au/projects/toniot-datasets and the TrustCom 2020 DOI.
 3. Every number in Sections 5 and 5.1, by running Appendix A on the two CSV files. The expected SHA-256 values are in Section 5.1.
-4. That each change in Section 0 is justified by the facts in Section 5.1, and that no change alters the title, area, dataset files or libraries.
-5. The Git/GitHub statements in Section 19 against the repository (the 26 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
+4. That each change in Section 0 is justified by the facts in Section 5.1, and that no change alters the title, area, dataset files or the core libraries (Pandas, Plotly, Dash).
+5. The Git/GitHub statements in Section 19 against the repository (the 27 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
 6. Anything in this document stated as a fact that is really an inference or a recommendation.
 
 Evidence labels used in this document: **verified** (computed from the files or read from the official page), **inference** (reasoned from verified facts), **recommendation** (a proposed choice), **unknown** (not checked).
