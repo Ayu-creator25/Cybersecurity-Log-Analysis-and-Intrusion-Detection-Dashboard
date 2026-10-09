@@ -6,7 +6,7 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering, the train/test split and a first baseline detector (results in `docs/eda_findings.md`, `docs/feature_set.csv` and `docs/detection_results.md`). The baseline is only slightly better than chance on the test set (ROC-AUC 0.535), so a second detector comes next. The dashboard is not built yet.
+Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering, the train/test split and two detectors, a robust z-score baseline and an Isolation Forest (results in `docs/eda_findings.md`, `docs/feature_set.csv` and `docs/detection_results.md`). Both are only slightly better than chance on the test set (ROC-AUC 0.535 and 0.563), so the next step is to find out whether the drift in normal behaviour is the cause. The dashboard is not built yet.
 
 ## How to run
 
@@ -28,6 +28,7 @@ python -m src.features
 python -m src.build_features
 python -m src.split
 python -m src.baseline
+python -m src.isolation_forest
 ```
 
 - `src.schema_report` writes `docs/data_dictionary.csv`.
@@ -39,6 +40,7 @@ python -m src.baseline
 - `src.build_features` writes `data/processed/features.csv` (row id, `ts`, `label`, `type` and the 80 features) and prints PASS when 9 checks succeed.
 - `src.split` defines the train/test split for the detector (train: normal rows of 2019-04-23 and 24; test: every row from 2019-04-25) and prints PASS when 9 checks succeed.
 - `src.baseline` fits the robust z-score baseline on the training rows, writes the scores of every row to `data/processed/baseline_scores.csv`, prints the test results and prints PASS when 5 checks succeed.
+- `src.isolation_forest` fits an Isolation Forest on the same training rows, writes its scores to `data/processed/isolation_forest_scores.csv`, prints a comparison with the baseline and prints PASS when 3 checks succeed.
 
 
 ## Dataset

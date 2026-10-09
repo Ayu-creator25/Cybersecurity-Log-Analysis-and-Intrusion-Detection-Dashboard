@@ -38,3 +38,43 @@ Script: `src/baseline.py`. Split: `src/split.py` (plan decision D19). Scores of 
 2. Try a reference of normal rows that is close in time to the rows being scored, to see whether the drift is the main problem.
 3. Repeat the evaluation with the stricter time-proxy cut-off of 0.5 (`docs/eda_findings.md` section 6.4).
 4. Do not choose a threshold or a method by looking at the test results; use the training rows for that.
+## 2. Second detector: Isolation Forest (2026-10-09)
+
+Script: `src/isolation_forest.py`. Library: scikit-learn 1.9.1, added to `requirements.txt` (plan decision D18). Same split and same threshold rule as the baseline.
+
+**Method.** Isolation Forest with 200 trees and `random_state` 42, fitted on the 5,580 normal training rows. Missing values are filled with the training median. The score is minus the Isolation Forest score, so a higher score means more unusual. The threshold is the 99th percentile of the training scores. The settings were fixed in advance and not tuned on the test rows. Scores of every row are written to `data/processed/isolation_forest_scores.csv` (not stored in Git).
+
+### 2.1 Comparison on the test rows (2,534 normal and 10,252 attack rows)
+
+| Detector | ROC-AUC | Average precision | False alarms | Recall |
+|---|---|---|---|---|
+| Baseline (robust z-score) | 0.535 | 0.838 | 2.1% | 1.3% |
+| Isolation Forest | 0.563 | 0.819 | 2.8% | 1.8% |
+
+The share of attack rows in the test set is 0.802, which is the average precision of a detector that always says "attack".
+
+| Attack type | Test rows | Baseline: ROC-AUC (flagged) | Isolation Forest: ROC-AUC (flagged) |
+|---|---|---|---|
+| ddos | 4,608 | 0.223 (0.1%) | 0.351 (0.0%) |
+| password | 3,628 | 0.882 (2.0%) | 0.775 (0.2%) |
+| xss | 1,269 | 0.641 (4.2%) | 0.723 (13.4%) |
+| injection | 612 | 0.635 (0.2%) | 0.572 (0.0%) |
+| dos | 120 | 0.430 (0.0%) | 0.540 (0.0%) |
+| mitm | 15 | 0.480 (0.0%) | 0.502 (0.0%) |
+
+### 2.2 Reading the results
+
+- **Verified:** Both detectors are close to chance. Neither flags more than 1.8% of the attack rows at its threshold, and false alarms are 2.1% and 2.8%.
+- **Verified:** Isolation Forest has the better ROC-AUC (0.563 against 0.535) and the baseline has the better average precision (0.838 against 0.819). The differences are small.
+- **Verified:** Isolation Forest is better for xss and dos; the baseline is better for password and injection. For ddos both are below 0.5 (0.351 and 0.223).
+- **Verified:** For Isolation Forest the median score is 0.35 on the training rows and 0.46 on the normal test rows, the same pattern as for the baseline (0.89 and 2.72).
+- **Caution:** dos has only 120 test rows and mitm only 15, so their numbers are indicative only. scanning is not evaluated (plan decision D19).
+- **Inference:** Two very different methods are weak in the same way, so the cause is probably the data and the split rather than one method. Normal behaviour shifts between the training dates and the test dates (`docs/eda_findings.md` sections 2 and 6.1), and many attack rows are not further from normal than the shifted normal rows are.
+- **Unknown:** Why ddos rows look more normal than normal rows of the same dates. Also unknown: whether a reference of normal rows that is close in time would change the result.
+
+### 2.3 Next steps (recommendations)
+
+1. Test the drift explanation directly: score each test row against normal rows from the same day, and see whether the results improve.
+2. Repeat the evaluation with the stricter time-proxy cut-off of 0.5 (`docs/eda_findings.md` section 6.4).
+3. Do not choose a method or a threshold by looking at the test results.
+4. Record scikit-learn in the decisions register of the plan at the end of this milestone.
