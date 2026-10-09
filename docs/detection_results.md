@@ -78,3 +78,41 @@ The share of attack rows in the test set is 0.802, which is the average precisio
 2. Repeat the evaluation with the stricter time-proxy cut-off of 0.5 (`docs/eda_findings.md` section 6.4).
 3. Do not choose a method or a threshold by looking at the test results.
 4. Record scikit-learn in the decisions register of the plan at the end of this milestone.
+
+
+## 3. Drift test: same-day reference (2026-10-09)
+
+Script: `src/drift_test.py`. This is a diagnostic, not a usable detector, because it needs normal rows of the same day.
+
+**Method.** Both detectors (robust z-score baseline and Isolation Forest, same fixed settings as in sections 1 and 2) are run with two references. The far reference is the one used so far: fitted on the normal rows of 2019-04-23 and 24. The same-day reference is fitted on the normal rows of the day that is scored. To avoid scoring rows that the model was fitted on, the normal rows of each day are cut into 5 blocks in time order. Each block is scored by a model fitted on the other 4 blocks, and an attack row gets the average of the 5 models. For every pair of day and attack type, the ROC-AUC of the attack rows is computed against the normal rows of the same day. The far-reference values differ from section 1 and 2 because the comparison group here is the normal rows of the same day, not all normal test rows.
+
+### 3.1 Results (ROC-AUC against the normal rows of the same day)
+
+| Day | Attack type | Attack rows | Normal rows | Baseline, far | Baseline, same day | Forest, far | Forest, same day |
+|---|---|---|---|---|---|---|---|
+| 04-25 | ddos | 3,009 | 1,179 | 0.170 | 0.694 | 0.215 | 0.794 |
+| 04-25 | dos | 120 | 1,179 | 0.312 | 0.246 | 0.423 | 0.196 |
+| 04-25 | injection | 612 | 1,179 | 0.569 | 0.606 | 0.474 | 0.588 |
+| 04-26 | ddos | 1,599 | 255 | 0.431 | 0.417 | 0.423 | 0.419 |
+| 04-26 | password | 2,919 | 255 | 0.902 | 0.859 | 0.826 | 0.866 |
+| 04-27 | password | 709 | 342 | 0.848 | 0.943 | 0.728 | 0.935 |
+| 04-27 | xss | 1,269 | 342 | 0.534 | 0.675 | 0.591 | 0.725 |
+| 04-29 | mitm | 15 | 758 | 0.624 | 0.642 | 0.708 | 0.639 |
+
+Mean ROC-AUC over the pairs, weighted by attack rows: baseline 0.537 (far) and 0.702 (same day); Isolation Forest 0.522 (far) and 0.738 (same day).
+
+### 3.2 Reading the results
+
+- **Verified:** The same-day reference raises the weighted mean ROC-AUC from 0.537 to 0.702 for the baseline and from 0.522 to 0.738 for Isolation Forest.
+- **Verified:** The largest gains are ddos on 04-25 (baseline 0.170 to 0.694, forest 0.215 to 0.794), password on 04-27 (0.848 to 0.943 and 0.728 to 0.935) and xss on 04-27 (0.534 to 0.675 and 0.591 to 0.725).
+- **Verified:** Some pairs do not improve: dos on 04-25 gets worse (0.312 to 0.246 and 0.423 to 0.196), and ddos on 04-26 stays below 0.5 (0.417 and 0.419).
+- **Inference:** The drift in normal behaviour is a main reason for the weak results in sections 1 and 2, but not the only one. Even with a same-day reference the weighted means are only 0.70 to 0.74, and some attack rows still look more normal than normal rows.
+- **Caution:** 04-26 has only 255 normal rows, dos 120 attack rows and mitm 15, so these values are indicative only. A real system would need a source of recent normal data, which this diagnostic assumes.
+- **Unknown:** Why dos on 04-25 and ddos on 04-26 look more normal than normal rows. Also unknown: how much of the remaining weakness comes from the features chosen, the time-proxy cut-off, or the nature of these attacks.
+
+### 3.3 Next steps (recommendations)
+
+1. Look at the features of the pairs that stay below 0.5 (dos on 04-25, ddos on 04-26) to see what is different there.
+2. Repeat the evaluation with the stricter time-proxy cut-off of 0.5 (`docs/eda_findings.md` section 6.4).
+3. Do not choose a method or a threshold by looking at the test results.
+4. Record scikit-learn in the decisions register of the plan at the end of this milestone.

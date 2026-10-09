@@ -6,7 +6,7 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering, the train/test split and two detectors, a robust z-score baseline and an Isolation Forest (results in `docs/eda_findings.md`, `docs/feature_set.csv` and `docs/detection_results.md`). Both are only slightly better than chance on the test set (ROC-AUC 0.535 and 0.563), so the next step is to find out whether the drift in normal behaviour is the cause. The dashboard is not built yet.
+Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering, the train/test split, two detectors (a robust z-score baseline and an Isolation Forest) and a drift test (results in `docs/eda_findings.md`, `docs/feature_set.csv` and `docs/detection_results.md`). Trained on normal rows of the first attack days, both detectors are only slightly better than chance on the test set (ROC-AUC 0.535 and 0.563). The drift test shows that using normal rows of the same day as the reference raises the ROC-AUC to about 0.70 to 0.74, so the change in normal behaviour over time is a main cause. The dashboard is not built yet.
 
 ## How to run
 
@@ -29,6 +29,7 @@ python -m src.build_features
 python -m src.split
 python -m src.baseline
 python -m src.isolation_forest
+python -m src.drift_test
 ```
 
 - `src.schema_report` writes `docs/data_dictionary.csv`.
@@ -41,6 +42,7 @@ python -m src.isolation_forest
 - `src.split` defines the train/test split for the detector (train: normal rows of 2019-04-23 and 24; test: every row from 2019-04-25) and prints PASS when 9 checks succeed.
 - `src.baseline` fits the robust z-score baseline on the training rows, writes the scores of every row to `data/processed/baseline_scores.csv`, prints the test results and prints PASS when 5 checks succeed.
 - `src.isolation_forest` fits an Isolation Forest on the same training rows, writes its scores to `data/processed/isolation_forest_scores.csv`, prints a comparison with the baseline and prints PASS when 3 checks succeed.
+- `src.drift_test` is a diagnostic: it compares the far reference (training rows) with a same-day reference for both detectors, prints a table per day and attack type and prints PASS when 3 checks succeed.
 
 
 ## Dataset
