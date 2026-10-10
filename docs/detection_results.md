@@ -116,3 +116,30 @@ Mean ROC-AUC over the pairs, weighted by attack rows: baseline 0.537 (far) and 0
 2. Repeat the evaluation with the stricter time-proxy cut-off of 0.5 (`docs/eda_findings.md` section 6.4).
 3. Do not choose a method or a threshold by looking at the test results.
 4. Record scikit-learn in the decisions register of the plan at the end of this milestone.
+
+## 4. Sensitivity to the time-proxy cut-off (2026-10-09)
+
+Script: `src/sensitivity.py`. It uses `src/drift_test.py`, which now reads the cleaned file and accepts a list of features. Same detectors and same fixed settings as before; nothing is tuned on the test rows. This completes item 2 of section 3.3.
+
+**Method.** The feature set depends on one judgment call: a feature is dropped as a time proxy if its absolute Spearman correlation with `ts` among normal rows is at least the cut-off (0.7 so far). Both detectors are run again with three feature sets: no time rule (87 features), cut-off 0.7 (80 features, as used so far) and cut-off 0.5 (69 features). For each set the table shows the ROC-AUC on the test rows with the training rows as reference ("main test", as in sections 1 and 2) and the weighted mean ROC-AUC of the same-day diagnostic from section 3.
+
+### 4.1 Results
+
+| Cut-off | Features | Baseline: main test | Baseline: same-day | Isolation Forest: main test | Isolation Forest: same-day |
+|---|---|---|---|---|---|
+| none (1.0) | 87 | 0.531 | 0.688 | 0.551 | 0.725 |
+| 0.7 (used so far) | 80 | 0.535 | 0.702 | 0.563 | 0.738 |
+| 0.5 | 69 | 0.529 | 0.671 | 0.537 | 0.708 |
+
+### 4.2 Reading the results
+
+- **Verified:** With the training rows as reference the ROC-AUC stays between 0.529 and 0.535 for the baseline and between 0.537 and 0.563 for Isolation Forest, whatever the cut-off. With the same-day reference it stays between 0.671 and 0.702 and between 0.708 and 0.738.
+- **Verified:** The 0.7 set has the highest value in all four columns. The differences to the other two sets are at most 0.031.
+- **Inference:** The conclusions of sections 1 to 3 do not depend on the cut-off: the detectors are weak with the far reference and clearly better with a same-day reference, for every feature set.
+- **Caution:** The cut-off of 0.7 was fixed before any detector was run. It is not chosen from these numbers, and it stays. The differences are small and come from the test rows only.
+- **Unknown:** Whether other choices (feature scaling, other detectors, a longer or shorter reference window) matter more than the feature set.
+
+### 4.3 Next steps (recommendations)
+
+1. Build the charts and the dashboard from the results so far, and show their limits openly: the weak result with the far reference, the better result with a same-day reference, and the small groups (dos 120 rows, mitm 15 rows, scanning not evaluated).
+2. Record the library and decisions of this milestone in the plan (scikit-learn, D18).

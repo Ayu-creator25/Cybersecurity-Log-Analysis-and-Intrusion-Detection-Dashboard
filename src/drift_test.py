@@ -17,7 +17,8 @@ import pandas as pd
 from sklearn.ensemble import IsolationForest
 
 from src.baseline import fit, roc_auc, score
-from src.build_features import NOT_FEATURES, OUT_FEATURES
+from src.build_features import NOT_FEATURES, kept_features
+from src.clean_data import OUT_FILE
 from src.isolation_forest import N_TREES, SEED
 from src.split import split_masks
 
@@ -47,10 +48,13 @@ def same_day_scores(name, normal_x, attack_x):
     return normal_scores, attack_total / BLOCKS
 
 
-def run():
-    """Return a DataFrame with one row per (day, attack type) and the four AUC values."""
-    data = pd.read_csv(OUT_FEATURES)
-    features = [c for c in data.columns if c not in NOT_FEATURES]
+def run(features=None):
+    """Return a DataFrame with one row per (day, attack type) and the four AUC values.
+
+    features: names of the features to use; the 80 kept features if None.
+    """
+    data = pd.read_csv(OUT_FILE, float_precision="round_trip")
+    features = features or kept_features()
     index = data[NOT_FEATURES]
     train, test, _ = split_masks(index)
     day = pd.to_datetime(data["ts"], unit="s", utc=True).dt.strftime("%m-%d")
