@@ -1,9 +1,9 @@
 # Cybersecurity Log Analysis and Intrusion Detection Dashboard
 ## Research Basis, Dataset Justification, Dataset Provenance, and Basic Project Plan
 
-> **Version 3 (final, updated 2026-10-08).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository on 2026-10-07 and 2026-10-08 (rows C23 to C26 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
+> **Version 3 (final, updated 2026-10-09).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository between 2026-10-07 and 2026-10-09 (rows C23 to C27 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
 >
-> **Project name, project area and dataset files are unchanged from version 1. The core stack (Python, Pandas, Plotly, Dash, Git/GitHub) is unchanged.** On 2026-10-08 the user confirmed that further libraries may be added when they make the work easier; each one is listed in `requirements.txt` and in Section 20 (D18). So far `requirements.txt` lists Pandas and NumPy. The Appendix A verification script uses Pandas only.
+> **Project name, project area and dataset files are unchanged from version 1. The core stack (Python, Pandas, Plotly, Dash, Git/GitHub) is unchanged.** On 2026-10-08 the user confirmed that further libraries may be added when they make the work easier; each one is listed in `requirements.txt` and in Section 20 (D18). So far `requirements.txt` lists Pandas, NumPy and scikit-learn. The Appendix A verification script uses Pandas only.
 
 ---
 
@@ -37,8 +37,9 @@ Type key: **REQUIRED** = correction needed for accuracy or safety of the analysi
 | C22 | Section 13 | Added a progress note (steps 1 and 2 done, step 3 in progress, later steps not started). The development order itself is unchanged | OPTIONAL | Section 19 |
 | C23 | Sections 13, 19, 20, 21 | Brought up to date: 26 commits, the scripts and their check results, the cleaning, EDA and feature decisions (D11 to D17), and the open items | REQUIRED | Terminal output from Git Bash; `docs/eda_findings.md`; `docs/feature_set.csv` |
 | C24 | Header, Section 20 (D10) | Corrected: NumPy is not "absent". It is installed with Pandas and imported directly by six scripts; at that time `requirements.txt` listed Pandas only (changed again in C25) | REQUIRED | `import numpy` in `src/build_features.py`, `clean_data.py`, `eda_correlation.py`, `eda_separation.py`, `features.py`, `schema_report.py` |
-| C25 | Header, Sections 20 and 21, "Suggestion not adopted" | Library policy clarified by the user on 2026-10-08: Pandas, Plotly and Dash stay as the core, and other libraries may be added when they make the work easier. Decisions D1 and D10 reworded, D18 added, open item 9 closed, `requirements.txt` now lists NumPy | REQUIRED | User message of 2026-10-08; `requirements.txt` (`pandas==3.0.6`, `numpy==2.5.3`) |
+| C25 | Header, Sections 20 and 21, "Suggestion not adopted" | Library policy clarified by the user on 2026-10-08: Pandas, Plotly and Dash stay as the core, and other libraries may be added when they make the work easier. Decisions D1 and D10 reworded, D18 added, the former open item on direct NumPy imports closed, `requirements.txt` now lists NumPy | REQUIRED | User message of 2026-10-08; `requirements.txt` (`pandas==3.0.6`, `numpy==2.5.3`) |
 | C26 | Sections 13, 19, 20 | Train/test split added (`src/split.py`, decisions D19 and D20), commit list extended to 27 | OPTIONAL | `python -m src.split`: 9 checks PASS in the user's terminal |
+| C27 | Sections 13, 19, 20, 21 | Detector milestone recorded: two detectors, the drift test and the sensitivity check; scikit-learn 1.9.1 added to `requirements.txt` (D18); decisions D21 to D24; open items updated; commit list extended to 32 | OPTIONAL | `docs/detection_results.md`; `requirements.txt`; terminal output from Git Bash |
 
 **Suggestion not adopted:** the course syllabus (CUTM1018) also lists NumPy, Matplotlib and Seaborn. Adding them was suggested as optional. At first this was read as "no new libraries"; on 2026-10-08 the user explained that the core libraries stay and more may be added to make the work easier. NumPy is now listed in `requirements.txt`; Matplotlib and Seaborn are not used yet (Section 20, D18).
 
@@ -572,7 +573,7 @@ Work in this order unless evidence shows a necessary adjustment:
 
 Do not jump directly to machine learning or dashboard development before understanding the data.
 
-**Progress (as of 2026-10-08):** steps 1 to 8 are done (scope, structure, schema, loading layer, cleaning, validation, EDA and feature engineering), and the train/test split for the detector is defined (`src/split.py`). Step 9 (the first detector) is next; steps 9 to 16 have not started. See Section 19.
+**Progress (as of 2026-10-09):** steps 1 to 11 are done in a first form. The simple baseline and an Isolation Forest are built (step 9), evaluated against the ground truth (step 10) and examined with a drift test and a sensitivity check (step 11); the results are in `docs/detection_results.md`. Step 12 (Plotly visualizations) is next; steps 12 to 16 have not started. See Section 19.
 
 ---
 
@@ -772,14 +773,14 @@ Unless new evidence requires correction, implementation should use these stable 
 
 ---
 
-## 19. Work completed so far (as of 2026-10-08)
+## 19. Work completed so far (as of 2026-10-09)
 
 Evidence for this section: the terminal output that the user pasted from Git Bash (each command and its result), screenshots of File Explorer and GitHub, and files the user uploaded. The private GitHub repository itself was not opened by any reviewer, so repository-level statements rest on that output.
 
 **Audit (completed).** The project image, the plan, the syllabus and both CSV files were inspected. The ground-truth file was missing from the first upload and was supplied afterwards; the alignment check then passed. Findings and corrections are in Sections 0, 5.1 and 7.
 
 **Environment**
-- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6 and NumPy 2.5.3, both listed in `requirements.txt`.
+- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6, NumPy 2.5.3 and scikit-learn 1.9.1, all listed in `requirements.txt`.
 - Local folder: `D:\CUTM\3rd_Sem\DAVP\Project\Cybersecurity_Log_Analysis_and_Intrusion_Detection_Dashboard`.
 
 **GitHub**
@@ -788,8 +789,8 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 
 **Repository layout**
 - `data/raw/`: the two raw CSV files, committed, byte-for-byte identical to the originals (SHA-256 values in Section 5.1; `.gitattributes` rule `data/raw/*.csv -text`).
-- `data/processed/`: `windows10_clean.csv` and `features.csv`, ignored by Git and rebuilt by the scripts.
-- `docs/`: this plan, `data_dictionary.csv`, `feature_set.csv`, `eda_findings.md`.
+- `data/processed/`: `windows10_clean.csv`, `features.csv`, `baseline_scores.csv` and `isolation_forest_scores.csv`, ignored by Git and rebuilt by the scripts.
+- `docs/`: this plan, `data_dictionary.csv`, `feature_set.csv`, `eda_findings.md` and `detection_results.md`.
 - `src/`: the scripts listed below. Also `README.md`, `requirements.txt`, `.gitignore`, `.gitattributes`.
 
 **Scripts and results** (run from the project folder with `python -m src.<name>`; the results are those printed in the user's terminal)
@@ -805,8 +806,12 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 | `features` | Choose the features a detector may use; write `docs/feature_set.csv` | 80 kept, 19 constant, 18 near-copies, 7 time proxies, 8 checks PASS |
 | `build_features` | Write `data/processed/features.csv` | 35,975 rows, 84 columns, 2,954 missing values in 709 rows, 9 checks PASS |
 | `split` | Define the train/test split for the detector (`docs/eda_findings.md` 6.4) | Train 5,580 normal rows (2019-04-23/24); test 12,786 rows from 2019-04-25 (2,534 normal, 10,252 attack); 852 attack rows of 04-23/24 not evaluated; 9 checks PASS |
+| `baseline` | Robust z-score detector fitted on the training rows | Test rows (2019-04-25 on): ROC-AUC 0.535, average precision 0.838 (attack share 0.802), 2.1% false alarms, 1.3% recall; 5 checks PASS |
+| `isolation_forest` | Isolation Forest (scikit-learn), same split and threshold rule | ROC-AUC 0.563, average precision 0.819, 2.8% false alarms, 1.8% recall; 3 checks PASS |
+| `drift_test` | Diagnostic: far reference against a same-day reference | Weighted mean ROC-AUC: baseline 0.537 and 0.702, Isolation Forest 0.522 and 0.738; 3 checks PASS |
+| `sensitivity` | Repeat with three feature sets (no time rule, cut-off 0.7, cut-off 0.5) | Conclusions unchanged; main-test ROC-AUC 0.529 to 0.563; 3 checks PASS |
 
-**Commits (all pushed; 27 at the time of writing)**
+**Commits (all pushed; 32 at the time of writing)**
 
 | Commit | Message |
 |---|---|
@@ -837,12 +842,17 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 | `3a590fe` | Add post-feature-selection findings to EDA document |
 | `aeefa43` | Update README: feature engineering step and run instructions |
 | `80a1b3a` | Update research plan to match the repository (decisions D11-D17) |
+| `d83541a` | Add train/test split, list numpy, update README and plan (library policy D18) |
+| `ba1f50c` | Add baseline detector (robust z-scores) with results and README update |
+| `549bd1f` | Add Isolation Forest detector with comparison, scikit-learn in requirements, README update |
+| `ea2c44a` | Add drift test (same-day reference) with results and README update |
+| `7dd0a31` | Add sensitivity check of the time-proxy cut-off, results and README update |
 
 A file cannot list the commit that adds it, so the commit that contains this updated plan is not in the table.
 
 **README.md** holds the project title and area, the course, the status, the run instructions, the dataset description with the SHA-256 values, the steps to obtain the data, the academic-use terms, the main citation and all eight papers asked for by the UNSW page, and the link to this plan.
 
-**Not done yet:** the first detector and its evaluation, the refinement of the detection method, the Plotly charts, the Dash dashboard, tests, the final documentation and the deployment preparation.
+**Not done yet:** the Plotly charts, the Dash dashboard, tests of the complete workflow, the final documentation and the deployment preparation.
 
 ---
 
@@ -870,6 +880,10 @@ A file cannot list the commit that adds it, so the commit that contains this upd
 | D18 | Library policy: Python, Pandas, Plotly and Dash are the core and stay. Other libraries may be added when they make the work easier. Each one is listed in `requirements.txt` and recorded in this register | User | The user's clarification of 2026-10-08 |
 | D19 | Train/test split: train on the normal rows of 2019-04-23 and 24 (5,580 rows); test on every row from 2019-04-25 (2,534 normal, 10,252 attack); the 852 attack rows of 04-23/24 (scanning and most of dos) are not evaluated; the first three days are not used | Implementation agent | Normal behaviour drifts (`docs/eda_findings.md` sections 2 and 6.1), so attack and normal rows are compared on the same dates; training uses normal rows only |
 | D20 | Detector progression: first a simple statistical baseline, then a detector from scikit-learn for comparison (the library is added to `requirements.txt` when it is first used) | Implementation agent | Section 11 asks for a transparent baseline first; D18 allows the extra library |
+| D21 | scikit-learn 1.9.1 is added to `requirements.txt` for the Isolation Forest | Implementation agent (allowed by D18) | A tested, standard anomaly detector; recorded here as D18 asks |
+| D22 | Detector settings are fixed in advance and not tuned on the test rows: baseline score = mean of the capped (10) absolute robust z-scores; Isolation Forest with 200 trees and `random_state` 42; missing values filled with the training median; threshold = 99th percentile of the training scores | Implementation agent | Avoids choosing settings from the test results |
+| D23 | Evaluation reports ROC-AUC, average precision (next to the attack share of 0.802), false alarms and recall at the threshold, per attack type, on the split of D19. The same-day reference is a diagnostic, not a detector | Implementation agent | Section 11, item 6; class imbalance and the drift (`docs/detection_results.md`) |
+| D24 | The time-proxy cut-off stays at 0.7 | Implementation agent | Fixed before any detector was run; the sensitivity check (cut-offs none, 0.7, 0.5) did not change the conclusions (`docs/detection_results.md` section 4) |
 
 ---
 
@@ -878,13 +892,14 @@ A file cannot list the commit that adds it, so the commit that contains this upd
 1. **Redistribution rights (unknown):** the UNSW page grants academic research use and states commercial-use permission requirements, but it does not expressly grant redistribution/re-publication rights for downloaded CSV files. The repository is private. A decision is needed before it becomes public.
 2. **Syllabus coverage (unknown):** the supplied syllabus teaches NumPy, Pandas, Matplotlib, Seaborn, Plotly, Dash, GitHub/project documentation and AI-assisted development. The core stack has no Matplotlib or Seaborn; D18 allows adding them if the course requires them or they help. Whether the assessment requires this project to use every course library is not stated in the supplied syllabus.
 3. **Official feature descriptions (open):** the descriptions published by UNSW have not been fetched. `docs/data_dictionary.csv` was built from the data itself (types, blanks, distinct values, range) and says nothing about the meaning of a feature.
-4. **Cause of the drift (unknown):** normal behaviour changes between the early and late period and also inside the attack period (`docs/eda_findings.md` sections 2 and 6.1). The cause is not known.
-5. **Time-proxy cut-off (open):** the cut-off of 0.7 (D14) is a judgment call. The main evaluation must be repeated once with 0.5 (`docs/eda_findings.md` section 6.4).
-6. **Detector design and anomaly framing (open):** attacks are 30.9% of all rows, and no single feature separates every attack type. Whether an unsupervised detector suits this data, how it is trained and how it is evaluated are decided in the baseline milestone.
-7. **Attack share, 30.87% vs 30.7% (open, minor):** Source 4 reports 30.7% for the Windows 10 subset; the local file gives 30.87%. The cause is unknown. The local file is the authority.
-8. **mitm (note):** only 15 rows; its results are indicative only.
+4. **Cause of the drift (unknown):** normal behaviour changes between the early and late period and also inside the attack period (`docs/eda_findings.md` sections 2 and 6.1). The cause is not known. The same-day diagnostic shows that the drift explains a large part of the weak detector results (`docs/detection_results.md` section 3).
+5. **Detector results (open):** with the training rows as reference both detectors are close to chance (ROC-AUC 0.535 and 0.563); with a same-day reference they reach 0.702 and 0.738. Which further steps would help (a reference window of recent normal rows, other detectors, scaling) is open. A real system would need a source of recent normal data.
+6. **Attack share, 30.87% vs 30.7% (open, minor):** Source 4 reports 30.7% for the Windows 10 subset; the local file gives 30.87%. The cause is unknown. The local file is the authority.
+7. **mitm (note):** only 15 rows; its results are indicative only.
+8. **Rows not evaluated (note):** the 852 attack rows of 2019-04-23/24 (447 scanning and 405 dos) are not in the test set (D19), so scanning has no result and dos only 120 test rows.
+9. **Unexplained cases (unknown):** dos on 04-25 and ddos on 04-26 look more normal than normal rows even with a same-day reference (`docs/detection_results.md` section 3).
 
-Closed since version 3 was first written: the question of direct NumPy imports (NumPy is now listed in `requirements.txt`, D10 and D18); the eight-paper citation list is in the README (commit `186d735`); sources 3 and 4 are verified (Section 16); a local data dictionary exists; the questions "does normal behaviour drift?" and "is a 30.9% attack share a problem for the choice of method?" were studied in the EDA, with the results above.
+Closed since version 3 was first written: the sensitivity of the results to the time-proxy cut-off (`docs/detection_results.md` section 4; D24); the question "is a 30.9% attack share a problem for the choice of method?" was studied with two detectors; the question of direct NumPy imports (NumPy is now listed in `requirements.txt`, D10 and D18); the eight-paper citation list is in the README (commit `186d735`); sources 3 and 4 are verified (Section 16); a local data dictionary exists; the questions "does normal behaviour drift?" and "is a 30.9% attack share a problem for the choice of method?" were studied in the EDA, with the results above.
 
 ---
 
@@ -896,7 +911,7 @@ Please check the following and mark each claim as *confirmed*, *contradicted* or
 2. The source and licensing statements in Sections 2 and 4 against https://research.unsw.edu.au/projects/toniot-datasets and the TrustCom 2020 DOI.
 3. Every number in Sections 5 and 5.1, by running Appendix A on the two CSV files. The expected SHA-256 values are in Section 5.1.
 4. That each change in Section 0 is justified by the facts in Section 5.1, and that no change alters the title, area, dataset files or the core libraries (Pandas, Plotly, Dash).
-5. The Git/GitHub statements in Section 19 against the repository (the 27 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
+5. The Git/GitHub statements in Section 19 against the repository (the 32 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
 6. Anything in this document stated as a fact that is really an inference or a recommendation.
 
 Evidence labels used in this document: **verified** (computed from the files or read from the official page), **inference** (reasoned from verified facts), **recommendation** (a proposed choice), **unknown** (not checked).
