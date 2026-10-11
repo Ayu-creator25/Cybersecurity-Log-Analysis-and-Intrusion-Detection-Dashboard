@@ -1,0 +1,13 @@
+detector,type,rows,auc_vs_normal,flagged_percent
+baseline (robust z-score),ddos,4608,0.223,0.1
+baseline (robust z-score),password,3628,0.882,2.0
+baseline (robust z-score),xss,1269,0.641,4.2
+baseline (robust z-score),injection,612,0.635,0.2
+baseline (robust z-score),dos,120,0.43,0.0
+baseline (robust z-score),mitm,15,0.48,0.0
+isolation forest,ddos,4608,0.351,0.0
+isolation forest,password,3628,0.775,0.2
+isolation forest,xss,1269,0.723,13.4
+isolation forest,injection,612,0.572,0.0
+isolation forest,dos,120,0.54,0.0
+isolation forest,mitm,15,0.502,0.0

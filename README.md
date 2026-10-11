@@ -6,7 +6,7 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering, the train/test split, two detectors (a robust z-score baseline and an Isolation Forest), a drift test, a sensitivity check of the feature rule and the first Plotly chart (rows per day by row type) (results in `docs/eda_findings.md`, `docs/feature_set.csv` and `docs/detection_results.md`). Trained on normal rows of the first attack days, both detectors are only slightly better than chance on the test set (ROC-AUC 0.535 and 0.563). Using normal rows of the same day as the reference raises the ROC-AUC to about 0.70 to 0.74, so the change in normal behaviour over time is a main cause. These conclusions hold for three different feature sets. The other charts and the dashboard are not built yet.
+Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering, the train/test split, two detectors (a robust z-score baseline and an Isolation Forest), a drift test, a sensitivity check of the feature rule and three Plotly charts: rows per day by row type, ROC-AUC of each detector per attack type, and the effect of a same-day reference (results in `docs/eda_findings.md`, `docs/feature_set.csv`, `docs/detection_results.md` and `results/`). Trained on normal rows of the first attack days, both detectors are only slightly better than chance on the test set (ROC-AUC 0.535 and 0.563). Using normal rows of the same day as the reference raises the ROC-AUC to about 0.70 to 0.74, so the change in normal behaviour over time is a main cause. These conclusions hold for three different feature sets. The dashboard is not built yet.
 
 ## How to run
 
@@ -31,6 +31,7 @@ python -m src.baseline
 python -m src.isolation_forest
 python -m src.drift_test
 python -m src.sensitivity
+python -m src.save_results
 python -m src.chart_data
 python -m src.charts
 ```
@@ -47,8 +48,9 @@ python -m src.charts
 - `src.isolation_forest` fits an Isolation Forest on the same training rows, writes its scores to `data/processed/isolation_forest_scores.csv`, prints a comparison with the baseline and prints PASS when 3 checks succeed.
 - `src.drift_test` is a diagnostic: it compares the far reference (training rows) with a same-day reference for both detectors, prints a table per day and attack type and prints PASS when 3 checks succeed.
 - `src.sensitivity` repeats the evaluation with three feature sets (no time rule, cut-off 0.7, cut-off 0.5) and prints PASS when 3 checks succeed. It takes about 2 minutes.
-- `src.chart_data` prints the table behind the first chart (rows per day by row type) and prints PASS when 5 checks succeed.
-- `src.charts` writes the Plotly charts as HTML files to `data/processed/charts/` and prints PASS when 2 checks succeed. Open a file in a browser; an internet connection is needed to load Plotly.
+- `src.save_results` runs both detectors and the drift test once and saves three small result tables in `results/` (`detector_overall.csv`, `detector_by_type.csv`, `drift_test.csv`), so that the charts and the dashboard do not repeat the calculation. It takes about a minute and prints PASS when 5 checks succeed.
+- `src.chart_data` prints the table behind the first chart (rows per day by row type) and prints PASS when 7 checks succeed.
+- `src.charts` writes the three Plotly charts as HTML files to `data/processed/charts/` and prints PASS when 6 checks succeed. Open a file in a browser; an internet connection is needed to load Plotly.
 
 
 ## Dataset
