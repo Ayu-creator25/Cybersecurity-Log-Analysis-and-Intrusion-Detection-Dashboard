@@ -4,9 +4,16 @@ import sys
 import pandas as pd
 
 from src.build_features import OUT_FEATURES
+from src.clean_data import OUT_FILE
 from src.data_loader import ROOT
 
 RESULTS_DIR = ROOT / "results"
+DRIFT_FEATURES = [
+    "Process_Handle Count",
+    "Process_Thread Count",
+    "Memory Available Bytes",
+    "LogicalDisk(_Total) pct_ Free Space",
+]
 TYPE_ORDER = ["normal", "scanning", "dos", "injection", "ddos", "password", "xss", "mitm"]
 
 
@@ -32,11 +39,31 @@ def drift_pairs():
     return pd.read_csv(RESULTS_DIR / "drift_test.csv")
 
 
+def feature_series(features=None, every=4):
+    """Every `every`-th row (in time order) with ts, label, type, day and the chosen features.
+
+    position is the row number in the full file, so that the days line up on the x axis.
+    """
+    features = features or DRIFT_FEATURES
+    data = pd.read_csv(OUT_FILE, usecols=["ts", "label", "type"] + features)
+    data.insert(0, "position", range(len(data)))
+    data["day"] = pd.to_datetime(data["ts"], unit="s", utc=True).dt.strftime("%Y-%m-%d")
+    return data.iloc[::every].reset_index(drop=True)
+
+
+def day_ticks(series):
+    """Where each day starts on the position axis: (positions, labels like '04-23')."""
+    first = series.groupby("day")["position"].min()
+    return [int(v) for v in first.values], [str(day)[5:] for day in first.index]
+
+
 if __name__ == "__main__":
     index = load_index()
     table = rows_per_day_by_type(index)
     print(table.to_string())
     by_type, pairs = detector_by_type(), drift_pairs()
+    series = feature_series()
+    positions, labels = day_ticks(series)
     checks = {
         "9 days with data": len(table) == 9,
         "8 row types": list(table.columns) == TYPE_ORDER,
@@ -45,6 +72,8 @@ if __name__ == "__main__":
         "11,104 attack rows": int(table.drop(columns="normal").to_numpy().sum()) == 11104,
         "detector results: 2 detectors x 6 attack types": len(by_type) == 12 and by_type["detector"].nunique() == 2,
         "drift test results: 8 pairs of day and attack type": len(pairs) == 8,
+        "feature series: every 4th row (8,994 rows) of 4 features": len(series) == 8994 and all(f in series.columns for f in DRIFT_FEATURES),
+        "feature series: 9 day labels, the first at position 0": len(labels) == 9 and positions[0] == 0,
     }
     for name, ok in checks.items():
         print(("PASS  " if ok else "FAIL  ") + name)

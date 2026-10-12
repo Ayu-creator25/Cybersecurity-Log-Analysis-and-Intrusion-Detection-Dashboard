@@ -6,8 +6,17 @@ and open them in a browser.
 import sys
 
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
-from src.chart_data import detector_by_type, drift_pairs, load_index, rows_per_day_by_type
+from src.chart_data import (
+    DRIFT_FEATURES,
+    day_ticks,
+    detector_by_type,
+    drift_pairs,
+    feature_series,
+    load_index,
+    rows_per_day_by_type,
+)
 from src.data_loader import ROOT
 
 OUT_DIR = ROOT / "data" / "processed" / "charts"
@@ -114,12 +123,44 @@ def drift_pairs_figure(pairs):
     return fig
 
 
+def feature_drift_figure(series):
+    """Question: does normal behaviour change over time? Four features along the row order."""
+    fig = make_subplots(rows=len(DRIFT_FEATURES), cols=1, shared_xaxes=True, vertical_spacing=0.04)
+    for number, feature in enumerate(DRIFT_FEATURES, start=1):
+        for label, name, color in ((0, "normal", "#B0B7C3"), (1, "attack", "#D55E00")):
+            part = series[series["label"] == label]
+            fig.add_trace(
+                go.Scatter(
+                    x=[int(v) for v in part["position"]],
+                    y=[float(v) for v in part[feature]],
+                    mode="markers",
+                    marker=dict(size=3, color=color, opacity=0.7),
+                    name=name,
+                    showlegend=(number == 1),
+                ),
+                row=number,
+                col=1,
+            )
+        fig.update_yaxes(title_text=feature, title_font=dict(size=10), row=number, col=1)
+    positions, labels = day_ticks(series)
+    fig.update_xaxes(tickmode="array", tickvals=positions, ticktext=labels)
+    fig.update_layout(
+        template="plotly_white",
+        height=900,
+        title_text="Does normal behaviour change over time? Four features<br><sup>Every 4th row. Grey = normal, orange = attack. The x axis is the row order with one label per day (month-day, UTC): days without data are skipped.</sup>",
+        xaxis4_title_text="Day (2019)",
+        legend_title_text="Row type",
+    )
+    return fig
+
+
 def build_all():
     """Return every chart as {file name: figure}."""
     return {
         "attacks_per_day": attacks_per_day_figure(rows_per_day_by_type(load_index())),
         "detector_by_type": detector_by_type_figure(detector_by_type()),
         "drift_pairs": drift_pairs_figure(drift_pairs()),
+        "feature_drift": feature_drift_figure(feature_series()),
     }
 
 
@@ -135,6 +176,7 @@ if __name__ == "__main__":
     checks["attacks_per_day: one bar series for each of the 8 row types"] = len(figures["attacks_per_day"].data) == 8
     checks["detector_by_type: one bar series for each of the 2 detectors"] = len(figures["detector_by_type"].data) == 2
     checks["drift_pairs: 4 bar series (2 detectors x 2 references)"] = len(figures["drift_pairs"].data) == 4
+    checks["feature_drift: 2 series (normal, attack) for each of the 4 features"] = len(figures["feature_drift"].data) == 8
     for name, ok in checks.items():
         print(("PASS  " if ok else "FAIL  ") + name)
     print("RESULT:", "PASS" if all(checks.values()) else "FAIL")
