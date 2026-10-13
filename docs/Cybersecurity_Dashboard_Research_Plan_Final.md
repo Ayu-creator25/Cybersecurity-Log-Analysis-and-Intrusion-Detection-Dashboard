@@ -1,9 +1,9 @@
 # Cybersecurity Log Analysis and Intrusion Detection Dashboard
 ## Research Basis, Dataset Justification, Dataset Provenance, and Basic Project Plan
 
-> **Version 3 (final, updated 2026-10-09).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository between 2026-10-07 and 2026-10-09 (rows C23 to C27 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
+> **Version 3 (final, updated 2026-10-12).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository between 2026-10-07 and 2026-10-12 (rows C23 to C28 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
 >
-> **Project name, project area and dataset files are unchanged from version 1. The core stack (Python, Pandas, Plotly, Dash, Git/GitHub) is unchanged.** On 2026-10-08 the user confirmed that further libraries may be added when they make the work easier; each one is listed in `requirements.txt` and in Section 20 (D18). So far `requirements.txt` lists Pandas, NumPy and scikit-learn. The Appendix A verification script uses Pandas only.
+> **Project name, project area and dataset files are unchanged from version 1. The core stack (Python, Pandas, Plotly, Dash, Git/GitHub) is unchanged.** On 2026-10-08 the user confirmed that further libraries may be added when they make the work easier; each one is listed in `requirements.txt` and in Section 20 (D18). So far `requirements.txt` lists Pandas, NumPy, scikit-learn, Plotly and Dash. The Appendix A verification script uses Pandas only.
 
 ---
 
@@ -40,6 +40,7 @@ Type key: **REQUIRED** = correction needed for accuracy or safety of the analysi
 | C25 | Header, Sections 20 and 21, "Suggestion not adopted" | Library policy clarified by the user on 2026-10-08: Pandas, Plotly and Dash stay as the core, and other libraries may be added when they make the work easier. Decisions D1 and D10 reworded, D18 added, the former open item on direct NumPy imports closed, `requirements.txt` now lists NumPy | REQUIRED | User message of 2026-10-08; `requirements.txt` (`pandas==3.0.6`, `numpy==2.5.3`) |
 | C26 | Sections 13, 19, 20 | Train/test split added (`src/split.py`, decisions D19 and D20), commit list extended to 27 | OPTIONAL | `python -m src.split`: 9 checks PASS in the user's terminal |
 | C27 | Sections 13, 19, 20, 21 | Detector milestone recorded: two detectors, the drift test and the sensitivity check; scikit-learn 1.9.1 added to `requirements.txt` (D18); decisions D21 to D24; open items updated; commit list extended to 32 | OPTIONAL | `docs/detection_results.md`; `requirements.txt`; terminal output from Git Bash |
+| C28 | Sections 13, 19, 20, 21 | Charts and dashboard recorded: four Plotly charts, the Dash dashboard with a feature dropdown, the small result files it reads, Plotly 7.1.0 and Dash 4.4.1 in `requirements.txt`; decisions D25 to D28; commit list extended to 35 | OPTIONAL | Terminal output and screenshots supplied by the user; `requirements.txt` |
 
 **Suggestion not adopted:** the course syllabus (CUTM1018) also lists NumPy, Matplotlib and Seaborn. Adding them was suggested as optional. At first this was read as "no new libraries"; on 2026-10-08 the user explained that the core libraries stay and more may be added to make the work easier. NumPy is now listed in `requirements.txt`; Matplotlib and Seaborn are not used yet (Section 20, D18).
 
@@ -573,7 +574,7 @@ Work in this order unless evidence shows a necessary adjustment:
 
 Do not jump directly to machine learning or dashboard development before understanding the data.
 
-**Progress (as of 2026-10-09):** steps 1 to 11 are done in a first form. The simple baseline and an Isolation Forest are built (step 9), evaluated against the ground truth (step 10) and examined with a drift test and a sensitivity check (step 11); the results are in `docs/detection_results.md`. Step 12 (Plotly visualizations) is next; steps 12 to 16 have not started. See Section 19.
+**Progress (as of 2026-10-12):** steps 1 to 14 are done in a first form: the four Plotly charts and the Dash dashboard are built (the dashboard shows the results of steps 9 to 11 with their limits). Testing of the complete workflow, the final documentation and the deployment preparation are next. See Section 19.
 
 ---
 
@@ -773,14 +774,14 @@ Unless new evidence requires correction, implementation should use these stable 
 
 ---
 
-## 19. Work completed so far (as of 2026-10-09)
+## 19. Work completed so far (as of 2026-10-12)
 
 Evidence for this section: the terminal output that the user pasted from Git Bash (each command and its result), screenshots of File Explorer and GitHub, and files the user uploaded. The private GitHub repository itself was not opened by any reviewer, so repository-level statements rest on that output.
 
 **Audit (completed).** The project image, the plan, the syllabus and both CSV files were inspected. The ground-truth file was missing from the first upload and was supplied afterwards; the alignment check then passed. Findings and corrections are in Sections 0, 5.1 and 7.
 
 **Environment**
-- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6, NumPy 2.5.3 and scikit-learn 1.9.1, all listed in `requirements.txt`.
+- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6, NumPy 2.5.3, scikit-learn 1.9.1, Plotly 7.1.0 and Dash 4.4.1, all listed in `requirements.txt`.
 - Local folder: `D:\CUTM\3rd_Sem\DAVP\Project\Cybersecurity_Log_Analysis_and_Intrusion_Detection_Dashboard`.
 
 **GitHub**
@@ -791,6 +792,7 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 - `data/raw/`: the two raw CSV files, committed, byte-for-byte identical to the originals (SHA-256 values in Section 5.1; `.gitattributes` rule `data/raw/*.csv -text`).
 - `data/processed/`: `windows10_clean.csv`, `features.csv`, `baseline_scores.csv` and `isolation_forest_scores.csv`, ignored by Git and rebuilt by the scripts.
 - `docs/`: this plan, `data_dictionary.csv`, `feature_set.csv`, `eda_findings.md` and `detection_results.md`.
+- `results/`: small result tables read by the charts and the dashboard (committed): `detector_overall.csv`, `detector_by_type.csv`, `drift_test.csv`, `rows_per_day.csv`, `feature_series.csv`.
 - `src/`: the scripts listed below. Also `README.md`, `requirements.txt`, `.gitignore`, `.gitattributes`.
 
 **Scripts and results** (run from the project folder with `python -m src.<name>`; the results are those printed in the user's terminal)
@@ -810,8 +812,13 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 | `isolation_forest` | Isolation Forest (scikit-learn), same split and threshold rule | ROC-AUC 0.563, average precision 0.819, 2.8% false alarms, 1.8% recall; 3 checks PASS |
 | `drift_test` | Diagnostic: far reference against a same-day reference | Weighted mean ROC-AUC: baseline 0.537 and 0.702, Isolation Forest 0.522 and 0.738; 3 checks PASS |
 | `sensitivity` | Repeat with three feature sets (no time rule, cut-off 0.7, cut-off 0.5) | Conclusions unchanged; main-test ROC-AUC 0.529 to 0.563; 3 checks PASS |
+| `save_results` | Save the detector and drift-test result tables in `results/` | 3 files; 5 checks PASS |
+| `chart_data` | Tables behind the charts (rows per day, saved results, feature series) | 9 checks PASS |
+| `charts` | Four Plotly charts as HTML files in `data/processed/charts/` | 8 checks PASS; the user viewed all four charts |
+| `save_dashboard_data` | Save the two small tables the dashboard needs (`rows_per_day.csv`, `feature_series.csv`, 957 KB) | 4 checks PASS |
+| `dashboard` (with `dashboard_data`) | Dash dashboard: five key-number cards, four tabs, a dropdown for eight features and a box with the limits of the results | Runs at http://127.0.0.1:8050; the user's screenshots show all four tabs and the dropdown |
 
-**Commits (all pushed; 32 at the time of writing)**
+**Commits (all pushed; 35 at the time of writing)**
 
 | Commit | Message |
 |---|---|
@@ -847,12 +854,15 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 | `549bd1f` | Add Isolation Forest detector with comparison, scikit-learn in requirements, README update |
 | `ea2c44a` | Add drift test (same-day reference) with results and README update |
 | `7dd0a31` | Add sensitivity check of the time-proxy cut-off, results and README update |
+| `aca3e6c` | Add Plotly chart 1 (attacks per day), plotly in requirements, plan and README update |
+| `05d3c17` | Add charts 2 and 3 (detector results, fresh reference), saved result tables and README update |
+| `b0cf69a` | Add chart 4 (feature drift over time) and README update |
 
 A file cannot list the commit that adds it, so the commit that contains this updated plan is not in the table.
 
 **README.md** holds the project title and area, the course, the status, the run instructions, the dataset description with the SHA-256 values, the steps to obtain the data, the academic-use terms, the main citation and all eight papers asked for by the UNSW page, and the link to this plan.
 
-**Not done yet:** the Plotly charts, the Dash dashboard, tests of the complete workflow, the final documentation and the deployment preparation.
+**Not done yet:** tests of the complete workflow, the final documentation, the deployment preparation and the decision about publishing the repository.
 
 ---
 
@@ -884,6 +894,10 @@ A file cannot list the commit that adds it, so the commit that contains this upd
 | D22 | Detector settings are fixed in advance and not tuned on the test rows: baseline score = mean of the capped (10) absolute robust z-scores; Isolation Forest with 200 trees and `random_state` 42; missing values filled with the training median; threshold = 99th percentile of the training scores | Implementation agent | Avoids choosing settings from the test results |
 | D23 | Evaluation reports ROC-AUC, average precision (next to the attack share of 0.802), false alarms and recall at the threshold, per attack type, on the split of D19. The same-day reference is a diagnostic, not a detector | Implementation agent | Section 11, item 6; class imbalance and the drift (`docs/detection_results.md`) |
 | D24 | The time-proxy cut-off stays at 0.7 | Implementation agent | Fixed before any detector was run; the sensitivity check (cut-offs none, 0.7, 0.5) did not change the conclusions (`docs/detection_results.md` section 4) |
+| D25 | Plotly 7.1.0 and Dash 4.4.1 are listed in `requirements.txt` (core libraries of the project) | Implementation agent | Needed for the charts and the dashboard |
+| D26 | The charts and the dashboard answer four questions, one tab each (when do the attacks happen, does normal behaviour change, how well do the detectors work, does a fresh reference help) and state the limits of the results on every tab | Implementation agent | Each chart answers a real analytical question; weak results and small groups are shown openly |
+| D27 | The dashboard reads only small committed files (`results/*.csv`, `docs/feature_set.csv`) written by `src/save_results.py` and `src/save_dashboard_data.py`, not the large data files | Implementation agent | It runs after a clone and can be deployed; the large data stay out of Git (D12) |
+| D28 | The feature dropdown marks four clock-like features as not used by the detectors (disk free space, Memory Cache Bytes, Memory Pool Nonpaged Bytes, Memory System Driver Total Bytes) | Implementation agent | Makes the reason for D14 visible; these are four of the seven time proxies |
 
 ---
 
@@ -898,8 +912,9 @@ A file cannot list the commit that adds it, so the commit that contains this upd
 7. **mitm (note):** only 15 rows; its results are indicative only.
 8. **Rows not evaluated (note):** the 852 attack rows of 2019-04-23/24 (447 scanning and 405 dos) are not in the test set (D19), so scanning has no result and dos only 120 test rows.
 9. **Unexplained cases (unknown):** dos on 04-25 and ddos on 04-26 look more normal than normal rows even with a same-day reference (`docs/detection_results.md` section 3).
+10. **Deployment (open):** where the dashboard will be hosted and whether the repository becomes public are not decided. Publishing depends on item 1 (re-sharing of the data files).
 
-Closed since version 3 was first written: the sensitivity of the results to the time-proxy cut-off (`docs/detection_results.md` section 4; D24); the question "is a 30.9% attack share a problem for the choice of method?" was studied with two detectors; the question of direct NumPy imports (NumPy is now listed in `requirements.txt`, D10 and D18); the eight-paper citation list is in the README (commit `186d735`); sources 3 and 4 are verified (Section 16); a local data dictionary exists; the questions "does normal behaviour drift?" and "is a 30.9% attack share a problem for the choice of method?" were studied in the EDA, with the results above.
+Closed since version 3 was first written: the charts and the dashboard are built (D25 to D28); the sensitivity of the results to the time-proxy cut-off (`docs/detection_results.md` section 4; D24); the question "is a 30.9% attack share a problem for the choice of method?" was studied with two detectors; the question of direct NumPy imports (NumPy is now listed in `requirements.txt`, D10 and D18); the eight-paper citation list is in the README (commit `186d735`); sources 3 and 4 are verified (Section 16); a local data dictionary exists; the questions "does normal behaviour drift?" and "is a 30.9% attack share a problem for the choice of method?" were studied in the EDA, with the results above.
 
 ---
 
@@ -911,7 +926,7 @@ Please check the following and mark each claim as *confirmed*, *contradicted* or
 2. The source and licensing statements in Sections 2 and 4 against https://research.unsw.edu.au/projects/toniot-datasets and the TrustCom 2020 DOI.
 3. Every number in Sections 5 and 5.1, by running Appendix A on the two CSV files. The expected SHA-256 values are in Section 5.1.
 4. That each change in Section 0 is justified by the facts in Section 5.1, and that no change alters the title, area, dataset files or the core libraries (Pandas, Plotly, Dash).
-5. The Git/GitHub statements in Section 19 against the repository (the 32 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
+5. The Git/GitHub statements in Section 19 against the repository (the 35 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
 6. Anything in this document stated as a fact that is really an inference or a recommendation.
 
 Evidence labels used in this document: **verified** (computed from the files or read from the official page), **inference** (reasoned from verified facts), **recommendation** (a proposed choice), **unknown** (not checked).
