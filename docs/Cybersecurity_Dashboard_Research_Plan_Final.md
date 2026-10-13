@@ -1,7 +1,7 @@
 # Cybersecurity Log Analysis and Intrusion Detection Dashboard
 ## Research Basis, Dataset Justification, Dataset Provenance, and Basic Project Plan
 
-> **Version 3 (final, updated 2026-10-12).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository between 2026-10-07 and 2026-10-12 (rows C23 to C28 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
+> **Version 3 (final, updated 2026-10-13).** This document is the research and planning handoff for implementation. It defines the project identity, evidence-backed dataset choice, verified dataset facts, scope, analysis direction, and implementation constraints. Sections 13, 19, 20 and 21 were brought up to date with the repository between 2026-10-07 and 2026-10-13 (rows C23 to C29 in Section 0). It supersedes version 2 (`Cybersecurity_Dashboard_Research_Plan_v2.md`) and keeps every section number of version 1. The draft of version 3 was produced by an external reviewer and then checked again by the implementation agent against the data files and the sources (rows C18 to C21 in Section 0). Changes from version 1 and version 2 are listed in Section 0; work completed so far is in Section 19; decisions are in Section 20; unknowns are in Section 21; Section 22 explains how to verify this document.
 >
 > **Project name, project area and dataset files are unchanged from version 1. The core stack (Python, Pandas, Plotly, Dash, Git/GitHub) is unchanged.** On 2026-10-08 the user confirmed that further libraries may be added when they make the work easier; each one is listed in `requirements.txt` and in Section 20 (D18). So far `requirements.txt` lists Pandas, NumPy, scikit-learn, Plotly and Dash. The Appendix A verification script uses Pandas only.
 
@@ -41,6 +41,7 @@ Type key: **REQUIRED** = correction needed for accuracy or safety of the analysi
 | C26 | Sections 13, 19, 20 | Train/test split added (`src/split.py`, decisions D19 and D20), commit list extended to 27 | OPTIONAL | `python -m src.split`: 9 checks PASS in the user's terminal |
 | C27 | Sections 13, 19, 20, 21 | Detector milestone recorded: two detectors, the drift test and the sensitivity check; scikit-learn 1.9.1 added to `requirements.txt` (D18); decisions D21 to D24; open items updated; commit list extended to 32 | OPTIONAL | `docs/detection_results.md`; `requirements.txt`; terminal output from Git Bash |
 | C28 | Sections 13, 19, 20, 21 | Charts and dashboard recorded: four Plotly charts, the Dash dashboard with a feature dropdown, the small result files it reads, Plotly 7.1.0 and Dash 4.4.1 in `requirements.txt`; decisions D25 to D28; commit list extended to 35 | OPTIONAL | Terminal output and screenshots supplied by the user; `requirements.txt` |
+| C29 | Sections 13, 19, 20 | Automatic tests recorded (`tests/test_project.py`, pytest 9.1.1 in `requirements-dev.txt`, decision D29); commit list extended to 36 | OPTIONAL | `python -m pytest -q`: 12 passed (terminal output supplied by the user) |
 
 **Suggestion not adopted:** the course syllabus (CUTM1018) also lists NumPy, Matplotlib and Seaborn. Adding them was suggested as optional. At first this was read as "no new libraries"; on 2026-10-08 the user explained that the core libraries stay and more may be added to make the work easier. NumPy is now listed in `requirements.txt`; Matplotlib and Seaborn are not used yet (Section 20, D18).
 
@@ -574,7 +575,7 @@ Work in this order unless evidence shows a necessary adjustment:
 
 Do not jump directly to machine learning or dashboard development before understanding the data.
 
-**Progress (as of 2026-10-12):** steps 1 to 14 are done in a first form: the four Plotly charts and the Dash dashboard are built (the dashboard shows the results of steps 9 to 11 with their limits). Testing of the complete workflow, the final documentation and the deployment preparation are next. See Section 19.
+**Progress (as of 2026-10-13):** steps 1 to 14 are done in a first form: the four Plotly charts and the Dash dashboard are built, and 12 automatic tests are in place (`tests/`). The final documentation and the deployment preparation are next. See Section 19.
 
 ---
 
@@ -774,14 +775,14 @@ Unless new evidence requires correction, implementation should use these stable 
 
 ---
 
-## 19. Work completed so far (as of 2026-10-12)
+## 19. Work completed so far (as of 2026-10-13)
 
 Evidence for this section: the terminal output that the user pasted from Git Bash (each command and its result), screenshots of File Explorer and GitHub, and files the user uploaded. The private GitHub repository itself was not opened by any reviewer, so repository-level statements rest on that output.
 
 **Audit (completed).** The project image, the plan, the syllabus and both CSV files were inspected. The ground-truth file was missing from the first upload and was supplied afterwards; the alignment check then passed. Findings and corrections are in Sections 0, 5.1 and 7.
 
 **Environment**
-- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6, NumPy 2.5.3, scikit-learn 1.9.1, Plotly 7.1.0 and Dash 4.4.1, all listed in `requirements.txt`.
+- Git 2.55.0.windows.3, branch `main`; Python 3.12.3 in a virtual environment (`.venv`, ignored by Git); Pandas 3.0.6, NumPy 2.5.3, scikit-learn 1.9.1, Plotly 7.1.0 and Dash 4.4.1, all listed in `requirements.txt`. pytest 9.1.1 is listed in `requirements-dev.txt` (it includes `requirements.txt`).
 - Local folder: `D:\CUTM\3rd_Sem\DAVP\Project\Cybersecurity_Log_Analysis_and_Intrusion_Detection_Dashboard`.
 
 **GitHub**
@@ -793,7 +794,7 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 - `data/processed/`: `windows10_clean.csv`, `features.csv`, `baseline_scores.csv` and `isolation_forest_scores.csv`, ignored by Git and rebuilt by the scripts.
 - `docs/`: this plan, `data_dictionary.csv`, `feature_set.csv`, `eda_findings.md` and `detection_results.md`.
 - `results/`: small result tables read by the charts and the dashboard (committed): `detector_overall.csv`, `detector_by_type.csv`, `drift_test.csv`, `rows_per_day.csv`, `feature_series.csv`.
-- `src/`: the scripts listed below. Also `README.md`, `requirements.txt`, `.gitignore`, `.gitattributes`.
+- `src/`: the scripts listed below. `tests/`: `test_project.py`. Also `README.md`, `requirements.txt`, `requirements-dev.txt`, `.gitignore`, `.gitattributes`.
 
 **Scripts and results** (run from the project folder with `python -m src.<name>`; the results are those printed in the user's terminal)
 
@@ -817,8 +818,9 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 | `charts` | Four Plotly charts as HTML files in `data/processed/charts/` | 8 checks PASS; the user viewed all four charts |
 | `save_dashboard_data` | Save the two small tables the dashboard needs (`rows_per_day.csv`, `feature_series.csv`, 957 KB) | 4 checks PASS |
 | `dashboard` (with `dashboard_data`) | Dash dashboard: five key-number cards, four tabs, a dropdown for eight features and a box with the limits of the results | Runs at http://127.0.0.1:8050; the user's screenshots show all four tabs and the dropdown |
+| `tests/test_project.py` | 12 automatic tests: raw file hashes, shapes, ground-truth match, ROC-AUC and average-precision functions, feature list counts, saved results, dashboard with four tabs, pinned requirements, README lists every runnable module, train/test split counts | `python -m pytest -q`: 12 passed |
 
-**Commits (all pushed; 35 at the time of writing)**
+**Commits (all pushed; 36 at the time of writing)**
 
 | Commit | Message |
 |---|---|
@@ -857,12 +859,13 @@ Evidence for this section: the terminal output that the user pasted from Git Bas
 | `aca3e6c` | Add Plotly chart 1 (attacks per day), plotly in requirements, plan and README update |
 | `05d3c17` | Add charts 2 and 3 (detector results, fresh reference), saved result tables and README update |
 | `b0cf69a` | Add chart 4 (feature drift over time) and README update |
+| `b12b61e` | Add Dash dashboard with feature dropdown, small result files, dash in requirements, plan and README update |
 
 A file cannot list the commit that adds it, so the commit that contains this updated plan is not in the table.
 
 **README.md** holds the project title and area, the course, the status, the run instructions, the dataset description with the SHA-256 values, the steps to obtain the data, the academic-use terms, the main citation and all eight papers asked for by the UNSW page, and the link to this plan.
 
-**Not done yet:** tests of the complete workflow, the final documentation, the deployment preparation and the decision about publishing the repository.
+**Not done yet:** the final documentation, the deployment preparation and the decision about publishing the repository.
 
 ---
 
@@ -898,6 +901,7 @@ A file cannot list the commit that adds it, so the commit that contains this upd
 | D26 | The charts and the dashboard answer four questions, one tab each (when do the attacks happen, does normal behaviour change, how well do the detectors work, does a fresh reference help) and state the limits of the results on every tab | Implementation agent | Each chart answers a real analytical question; weak results and small groups are shown openly |
 | D27 | The dashboard reads only small committed files (`results/*.csv`, `docs/feature_set.csv`) written by `src/save_results.py` and `src/save_dashboard_data.py`, not the large data files | Implementation agent | It runs after a clone and can be deployed; the large data stay out of Git (D12) |
 | D28 | The feature dropdown marks four clock-like features as not used by the detectors (disk free space, Memory Cache Bytes, Memory Pool Nonpaged Bytes, Memory System Driver Total Bytes) | Implementation agent | Makes the reason for D14 visible; these are four of the seven time proxies |
+| D29 | Automatic tests use pytest 9.1.1, listed in `requirements-dev.txt` (not in `requirements.txt`, so a deployed dashboard does not install it). Tests that need the large files in `data/processed/` are skipped when those files are missing | Implementation agent (allowed by D18) | Protects the results, the feature list and the documentation from silent changes |
 
 ---
 
@@ -926,7 +930,7 @@ Please check the following and mark each claim as *confirmed*, *contradicted* or
 2. The source and licensing statements in Sections 2 and 4 against https://research.unsw.edu.au/projects/toniot-datasets and the TrustCom 2020 DOI.
 3. Every number in Sections 5 and 5.1, by running Appendix A on the two CSV files. The expected SHA-256 values are in Section 5.1.
 4. That each change in Section 0 is justified by the facts in Section 5.1, and that no change alters the title, area, dataset files or the core libraries (Pandas, Plotly, Dash).
-5. The Git/GitHub statements in Section 19 against the repository (the 35 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
+5. The Git/GitHub statements in Section 19 against the repository (the 36 commits in the table, private visibility, `data/raw/`, `.gitattributes`, the scripts in `src/` and the files in `docs/`). If the repository is private and cannot be opened, mark repository-specific claims as cannot be independently verified.
 6. Anything in this document stated as a fact that is really an inference or a recommendation.
 
 Evidence labels used in this document: **verified** (computed from the files or read from the official page), **inference** (reasoned from verified facts), **recommendation** (a proposed choice), **unknown** (not checked).
