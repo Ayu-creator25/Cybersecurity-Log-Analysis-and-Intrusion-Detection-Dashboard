@@ -6,7 +6,7 @@ Course project for Data Analysis and Visualization using Python (CUTM1018), Cent
 
 ## Status
 
-Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering, the train/test split, two detectors (a robust z-score baseline and an Isolation Forest), a drift test, a sensitivity check of the feature rule and four Plotly charts: rows per day by row type, ROC-AUC of each detector per attack type, the effect of a same-day reference and the change of four features over time (results in `docs/eda_findings.md`, `docs/feature_set.csv`, `docs/detection_results.md` and `results/`). Trained on normal rows of the first attack days, both detectors are only slightly better than chance on the test set (ROC-AUC 0.535 and 0.563). Using normal rows of the same day as the reference raises the ROC-AUC to about 0.70 to 0.74, so the change in normal behaviour over time is a main cause. These conclusions hold for three different feature sets. The Dash dashboard is built (`python -m src.dashboard`) but not deployed yet. 12 automatic tests check the raw data, the feature list, the saved results and the dashboard (`python -m pytest -q`).
+Done: dataset and schema verification, the loading layer, data cleaning with validation, exploratory analysis, feature engineering, the train/test split, two detectors (a robust z-score baseline and an Isolation Forest), a drift test, a sensitivity check of the feature rule and four Plotly charts: rows per day by row type, ROC-AUC of each detector per attack type, the effect of a same-day reference and the change of four features over time (results in `docs/eda_findings.md`, `docs/feature_set.csv`, `docs/detection_results.md` and `results/`). Trained on normal rows of the first attack days, both detectors are only slightly better than chance on the test set (ROC-AUC 0.535 and 0.563). Using normal rows of the same day as the reference raises the ROC-AUC to about 0.70 to 0.74, so the change in normal behaviour over time is a main cause. These conclusions hold for three different feature sets. The Dash dashboard is built (`python -m src.dashboard`) and is prepared for deployment on Render (see "Deployment"), but not deployed yet. 12 automatic tests check the raw data, the feature list, the saved results and the dashboard (`python -m pytest -q`).
 
 ## How to run
 
@@ -108,3 +108,16 @@ Other documents:
 ## Tests
 
 Install the test tool with `python -m pip install -r requirements-dev.txt` and run `python -m pytest -q`. The 12 tests check that the raw files are unchanged (SHA-256), the shapes of the data and the match with the ground truth, the ROC-AUC and average-precision functions on small examples, the feature decision list, the saved results against the numbers in the documents, that the dashboard builds with four tabs, that `requirements.txt` is pinned and that the README lists every runnable module. Tests that need the large files in `data/processed/` are skipped when those files are missing.
+
+## Deployment
+
+The dashboard reads only small files that are stored in Git (`results/` and `docs/feature_set.csv`), so it needs neither the raw data nor the large processed files. `requirements-deploy.txt` lists what it needs (Pandas, NumPy, Plotly, Dash and gunicorn) and `render.yaml` describes the service for Render (https://render.com).
+
+1. Push the repository to GitHub (a private repository works).
+2. On Render, create a new Blueprint (or Web Service), connect your GitHub account and select this repository. Render's menus may look different from this description; follow Render's own instructions if they do.
+3. Render reads `render.yaml`, installs `requirements-deploy.txt` and starts `gunicorn src.dashboard:server`.
+4. Open the address that Render shows. On the free plan the service sleeps after some minutes without visitors, so the first request can take about a minute.
+
+To run the dashboard on your own computer, use `python -m src.dashboard` and open http://127.0.0.1:8050. gunicorn is for the hosting server (Linux) and is not needed locally.
+
+Do not make the repository public before the question of re-sharing the TON_IoT data files is settled (open item 1 in `docs/Cybersecurity_Dashboard_Research_Plan_Final.md`). The deployed dashboard shows only derived results and does not publish the raw data files.
